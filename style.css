@@ -3,8 +3,10 @@
 }
 
 .container {
-    border-radius: 2;
-    border-color: blue;
-    border-spacing: 5;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.93);
+    padding: 48px 45px;
+    border-radius: 18px;
+    box-shadow: 0 15px 60px rgba(199, 31, 55, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid #e8e8e8;
+    position: relative;
 }
