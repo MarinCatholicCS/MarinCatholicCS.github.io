@@ -9,16 +9,37 @@
     unicode-bidi: isolate;
 }
 
+.mainTitle {
+  font-family:;
+}
+
 .container {
     box-shadow: rgba(17, 124, 231, 0.3) 0px 15px 60px, rgba(0, 0, 0, 0.2) 0px 5px 15px;
     position: relative;
-    background: linear-gradient(180deg, #3033ed, #21b4ef, #fdfdfd);
-    padding: 48px 45px;
+    background: white;
+    padding: 10px 45px;
     border-radius: 18px;
     border-width: 3px;
     border-style: solid;
-    border-color: rgb(232, 232, 232);
+    border-color: #21b4ef;
     border-image: initial;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.headerOfBox {
+  font-family: 'Poppins', Sans-Serif;
+  color: blue;
+}
+
+.boxLinks {
+  font-family: 'Bitcount Prop Single', Sans-Serif;
+  text-align: center;
 }
 
 .container h1 {
