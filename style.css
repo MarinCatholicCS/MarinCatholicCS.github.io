@@ -1,14 +1,24 @@
 * {
-    color: red;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.div {
+    display: block;
+    unicode-bidi: isolate;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.93);
-  border-radius: 18px;
-  box-shadow: 0 15px 60px rgba(199, 31, 55, 0.3);
+    box-shadow: rgba(199, 31, 55, 0.3) 0px 15px 60px, rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.93);
+    padding: 48px 45px;
+    border-radius: 18px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(232, 232, 232);
+    border-image: initial;
 }
 
 .container h1 {
