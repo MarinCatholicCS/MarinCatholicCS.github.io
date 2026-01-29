@@ -104,9 +104,13 @@ function enableTyping() {
               } else {
                 output = document.createTextNode(`${command}: command not found`);
               }
-              terminal.appendChild(output + "\n" + output);
+              const tempCommand = document.createTextNode(command);
+
+              terminal.appendChild(command);
+              terminal.appendChild(newLine);
+              terminal.appendChild(output);
             }
-            
+
             const newPrompt = document.createTextNode('$ ');
             terminal.appendChild(newPrompt);
             
