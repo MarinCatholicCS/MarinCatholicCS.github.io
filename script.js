@@ -74,32 +74,12 @@ function addProjects() {
     addNextProject();
 }
 
-function createNewInputLine() {
-    const inputLine = document.createElement('span');
-    inputLine.className = 'input-line';
-    terminal.insertBefore(inputLine, cursor);
-    currentInputLine = inputLine;
-    return inputLine;
-}
-
-function handleCommand(command) {
-    let output;
-    if (command === "sudo") {
-        output = "sudo these nuts";
-    } else if (command === "whoami") {
-        output = "who are we at all?";
-    } else if (command === "ozymandias") {
-        output = ozymandias;
-    } else {
-        output = `${command}: command not found`;
-    }
-    return output;
-}
-
 function enableTyping() {
-    createNewInputLine();
+    currentInputLine = document.createElement('span');
+    currentInputLine.className = 'input-line';
+    terminal.insertBefore(currentInputLine, cursor);
     
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function handleKeyPress(e) {
         if (!currentInputLine) return;
         
         const currentText = currentInputLine.textContent;
@@ -111,27 +91,41 @@ function enableTyping() {
             e.preventDefault();
             const command = currentText.trim();
             
-            cursor.remove();
-            
             const commandEcho = document.createTextNode(command);
-            terminal.appendChild(commandEcho);
-            terminal.appendChild(document.createElement("br"));
+            const lineBreak1 = document.createElement("br");
+            
+            terminal.insertBefore(commandEcho, cursor);
+            terminal.insertBefore(lineBreak1, cursor);
             
             if (command) {
-                const output = handleCommand(command);
-                const outputNode = document.createTextNode(output);
-                terminal.appendChild(outputNode);
-                terminal.appendChild(document.createElement("br"));
+                let outputText;
+                if (command === "sudo") {
+                    outputText = "sudo these nuts";
+                } else if (command === "whoami") {
+                    outputText = "who are we at all?";
+                } else if (command === "ozymandias") {
+                    outputText = ozymandias;
+                } else {
+                    outputText = `${command}: command not found`;
+                }
+                
+                const output = document.createTextNode(outputText);
+                const lineBreak2 = document.createElement("br");
+                
+                terminal.insertBefore(output, cursor);
+                terminal.insertBefore(lineBreak2, cursor);
             }
 
             const newPrompt = document.createTextNode('$ ');
-            terminal.appendChild(newPrompt);
+            terminal.insertBefore(newPrompt, cursor);
             
-            currentInputLine.remove();
+            if (currentInputLine && currentInputLine.parentNode) {
+                currentInputLine.remove();
+            }
             
-            terminal.appendChild(cursor);
-            
-            createNewInputLine();
+            currentInputLine = document.createElement('span');
+            currentInputLine.className = 'input-line';
+            terminal.insertBefore(currentInputLine, cursor);
             
             terminal.scrollTop = terminal.scrollHeight;
             
