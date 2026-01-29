@@ -96,15 +96,15 @@ function enableTyping() {
             if (command) {
               let output;
               if (command == "sudo") {
-                output = document.createTextNode(`sudo these nuts\n`);
+                output = document.createTextNode(`sudo these nuts`);
               } else if (command == "whoami") {
-                output = document.createTextNode(`who are we at all?\n`);
+                output = document.createTextNode(`who are we at all?`);
               } else if (command == "ozymandias") {
-                output = document.createTextNode(ozymandias + "\n");
+                output = document.createTextNode(ozymandias);
               } else {
-                output = document.createTextNode(`${command}: command not found\n`);
+                output = document.createTextNode(`${command}: command not found`);
               }
-              terminal.appendChild(output);
+              terminal.appendChild(output + "\n" + output);
             }
             
             const newPrompt = document.createTextNode('$ ');
