@@ -42,6 +42,22 @@ function type() {
     }
 }
 
+function cmd_handler(command) {
+    let outputText;
+    if (command === "sudo") {
+        outputText = "sudo these nuts";
+    } else if (command === "whoami") {
+        outputText = "who are we at all?";
+    } else if (command === "ozymandias") {
+        outputText = ozymandias;
+    } else if (command === "gavin") {
+        outputText = "newsom🥀💔";
+    } else {
+        outputText = `${command}: command not found`;
+    }
+    return outputText;
+}
+
 function addProjects() {
     let projectIndex = 0;
     
@@ -98,16 +114,7 @@ function enableTyping() {
             terminal.insertBefore(lineBreak1, cursor);
             
             if (command) {
-                let outputText;
-                if (command === "sudo") {
-                    outputText = "sudo these nuts";
-                } else if (command === "whoami") {
-                    outputText = "who are we at all?";
-                } else if (command === "ozymandias") {
-                    outputText = ozymandias;
-                } else {
-                    outputText = `${command}: command not found`;
-                }
+                const outputText = cmd_handler(command);
                 
                 const output = document.createTextNode(outputText);
                 const lineBreak2 = document.createElement("br");
