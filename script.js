@@ -1,4 +1,4 @@
-const textBeforeProjects = `$ who am i
+const textBeforeProjects = `$ whoami
 Marin Catholic Computer Science Club\n
 $ projects
 `;
@@ -6,7 +6,7 @@ $ projects
 // append new projects here
 const projects = [
     { name: "getmo", url: "../getmo/" },
-    { name: "rate my teacher", url: "../ratemyteach/" }
+    { name: "rate my teacher (beta)", url: "../ratemyteach/" }
 ];
 
 const ozymandias = `I met a traveller from an antique land,
