@@ -90,9 +90,6 @@ function enableTyping() {
             
             cursor.remove();
             
-            const newLine = document.createTextNode('\n');
-            terminal.appendChild(newLine);
-            
             if (command) {
               let output;
               if (command == "sudo") {
@@ -105,10 +102,13 @@ function enableTyping() {
                 output = document.createTextNode(`${command}: command not found`);
               }
               const tempCommand = document.createTextNode(command);
+              const lineBreak1 = document.createElement("br");
+              const lineBreak2 = document.createElement("br");
 
-              terminal.appendChild(command);
-              terminal.appendChild(newLine);
+              terminal.appendChild(tempCommand);
+              terminal.appendChild(lineBreak1);
               terminal.appendChild(output);
+              terminal.appendChild(lineBreak2);
             }
 
             const newPrompt = document.createTextNode('$ ');
