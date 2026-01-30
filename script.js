@@ -1,5 +1,6 @@
-const textBeforeProjects = `$ whoami
-Marin Catholic Computer Science Club\n
+const textIntro = `$ whoami
+Marin Catholic Computer Science Club
+
 $ projects
 `;
 
@@ -7,6 +8,14 @@ $ projects
 const projects = [
     { name: "getmo", url: "../getmo/" },
     { name: "rate my teacher (beta)", url: "../ratemyteach/" }
+];
+
+const officers = [
+    { name: "Stanley Ho — Co-President" },
+    { name: "Nico Zametto — Co-President" },
+    { name: "Alex Willard — Officer" },
+    { name: "Mo Adib - Moderator" }
+
 ];
 
 const ozymandias = `I met a traveller from an antique land,
@@ -98,14 +107,13 @@ const cursor = document.createElement('span');
 cursor.className = 'cursor';
 
 let index = 0;
-const typingSpeed = 60; // ms / character
+const typingSpeed = 30;
 let currentInputLine = null;
 
-function type() {
-    if (index < textBeforeProjects.length) {
-        terminal.textContent += textBeforeProjects.charAt(index);
-        index++;
-        setTimeout(type, typingSpeed);
+function typeIntro() {
+    if (index < textIntro.length) {
+        terminal.textContent += textIntro.charAt(index++);
+        setTimeout(typeIntro, typingSpeed);
     } else {
         addProjects();
     }
@@ -123,6 +131,10 @@ function cmd_handler(command) {
         outputText = "newsom🥀💔";
     } else if (command === "mc") {
         outputText = mc_ascii;
+    } else if (command === "1") {
+        window.location.replace(projects[0].url);
+    } else if (command === "2") {
+        window.location.replace(projects[1].url);
     } else {
         outputText = `${command}: command not found`;
     }
@@ -130,92 +142,112 @@ function cmd_handler(command) {
 }
 
 function addProjects() {
-    let projectIndex = 0;
-    
-    function addNextProject() {
-        if (projectIndex < projects.length) {
-            const link = document.createElement('a');
-            link.href = projects[projectIndex].url;
-            link.textContent = `  ${projectIndex + 1}. ${projects[projectIndex].name}`;
-            link.style.color = '#0f0';
-            link.style.textDecoration = 'none';
-            link.style.display = 'block';
-            link.onmouseover = function() {
-                this.style.textDecoration = 'underline';
-            };
-            link.onmouseout = function() {
-                this.style.textDecoration = 'none';
-            };
-            
+    let i = 0;
+
+    function next() {
+        if (i < projects.length) {
+            const link = document.createElement("a");
+            link.href = projects[i].url;
+            link.textContent = `  ${i + 1}. ${projects[i].name}`;
+            link.style.display = "block";
+            link.style.color = "#00ff1eff";          // white
+            link.style.textDecoration = "none";
+            link.onmouseover = () => link.style.textDecoration = "underline";
+            link.onmouseout = () => link.style.textDecoration = "none";
+
             terminal.appendChild(link);
-            projectIndex++;
-            setTimeout(addNextProject, 100);
+
+            i++;
+            setTimeout(next, 120);
         } else {
-            const finalPrompt = document.createTextNode('\n$ ');
-            terminal.appendChild(finalPrompt);
+            terminal.appendChild(document.createTextNode("\n$ officers\n"));
+            addOfficers();
+        }
+    }
+
+    next();
+}
+
+
+function addOfficers() {
+    let i = 0;
+
+    function next() {
+        if (i < officers.length) {
+            const line = document.createElement("div");
+            line.textContent = `  - ${officers[i].name}`;
+            line.style.color = "#00ff1eff";          // white
+            line.onmouseover = () => line.style.textDecoration = "underline";
+            line.onmouseout = () => line.style.textDecoration = "none";
+            terminal.appendChild(line);
+
+            i++;
+            setTimeout(next, 120);
+        } else {
+            terminal.appendChild(document.createTextNode("\n$ "));
             terminal.appendChild(cursor);
             enableTyping();
         }
     }
-    
-    addNextProject();
+
+    next();
 }
 
 function enableTyping() {
     currentInputLine = document.createElement('span');
     currentInputLine.className = 'input-line';
     terminal.insertBefore(currentInputLine, cursor);
-    
+
     document.addEventListener('keydown', function handleKeyPress(e) {
         if (!currentInputLine) return;
-        
+
         const currentText = currentInputLine.textContent;
-        
+
         if (e.key === 'Backspace') {
             e.preventDefault();
             currentInputLine.textContent = currentText.slice(0, -1);
         } else if (e.key === 'Enter') {
             e.preventDefault();
             const command = currentText.trim();
-            
+
             const commandEcho = document.createTextNode(command);
             const lineBreak1 = document.createElement("br");
-            
+
             terminal.insertBefore(commandEcho, cursor);
             terminal.insertBefore(lineBreak1, cursor);
-            
+
             if (command) {
                 const outputText = cmd_handler(command);
-                
+
                 const output = document.createTextNode(outputText);
                 const lineBreak2 = document.createElement("br");
-                
+
                 terminal.insertBefore(output, cursor);
                 terminal.insertBefore(lineBreak2, cursor);
             }
 
             const newPrompt = document.createTextNode('$ ');
             terminal.insertBefore(newPrompt, cursor);
-            
+
             if (currentInputLine && currentInputLine.parentNode) {
                 currentInputLine.remove();
             }
-            
+
             currentInputLine = document.createElement('span');
             currentInputLine.className = 'input-line';
             terminal.insertBefore(currentInputLine, cursor);
-            
+
             terminal.scrollTop = terminal.scrollHeight;
-            
+
         } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
             e.preventDefault();
             currentInputLine.textContent += e.key;
         }
     });
-    
+
     window.focus();
 }
 
-window.addEventListener('load', () => {
-    setTimeout(type, 500);
+window.addEventListener("load", () => {
+    setTimeout(typeIntro, 500);
 });
