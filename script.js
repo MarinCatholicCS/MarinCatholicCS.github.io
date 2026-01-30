@@ -13,7 +13,8 @@ const projects = [
 const officers = [
     { name: "Stanley Ho — Co-President" },
     { name: "Nico Zametto — Co-President" },
-    { name: "Alex Willard — Officer" },
+    { name: "Gavin Perry - First Officer"},
+    { name: "Alex Willard — Second Officer" },
     { name: "Mo Adib - Moderator" }
 
 ];
