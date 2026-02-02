@@ -7,13 +7,14 @@ $ projects
 // append new projects here
 const projects = [
     { name: "getmo", url: "../getmo/" },
+    { name: "mo-sweeper", url: "../mosweeper/" },
     { name: "rate my teacher (beta)", url: "../ratemyteach/" }
 ];
 
 const officers = [
     { name: "Stanley Ho — Co-President" },
     { name: "Nico Zametto — Co-President" },
-    { name: "Gavin Perry - First Officer"},
+    { name: "Gavin Perry - First Officer" },
     { name: "Alex Willard — Second Officer" },
     { name: "Mo Adib - Moderator" }
 
@@ -136,6 +137,8 @@ function cmd_handler(command) {
         window.location.replace(projects[0].url);
     } else if (command === "2") {
         window.location.replace(projects[1].url);
+    } else if (command === "3") {
+        window.location.replace(projects[2].url);
     } else {
         outputText = `${command}: command not found`;
     }
