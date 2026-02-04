@@ -9,7 +9,8 @@ const projects = [
     { name: "getmo", url: "../getmo/" },
     { name: "mo-sweeper", url: "../mosweeper/" },
     { name: "rate my teacher (beta)", url: "../ratemyteach/" },
-    { name: "flappymo", url: "../flappymo/"}
+    { name: "flappymo", url: "../flappymo/"},
+    { name: "wildchat", url: "../chatatmc/"}
 ];
 
 const officers = [
@@ -142,6 +143,8 @@ function cmd_handler(command) {
         window.location.replace(projects[2].url);
     } else if (command === "4") {
         window.location.replace(projects[3].url);
+    } else if (command === "5") {
+        window.location.replace(projects[4].url);
     } else {
         outputText = `${command}: command not found`;
     }
