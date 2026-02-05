@@ -8,9 +8,9 @@ $ projects
 const projects = [
     { name: "getmo", url: "../getmo/" },
     { name: "mo-sweeper", url: "../mosweeper/" },
-    { name: "rate my teacher (beta)", url: "../ratemyteach/" },
-    { name: "flappymo", url: "../flappymo/"},
-    { name: "wildchat", url: "../chatatmc/"}
+    { name: "rate my teacher (coming soon)", url: "/" },
+    { name: "flappymo", url: "../flappymo/" },
+    { name: "wildchat", url: "../chatatmc/" }
 ];
 
 const officers = [
