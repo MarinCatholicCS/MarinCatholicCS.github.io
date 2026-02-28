@@ -24,7 +24,7 @@ const officers = [
 ];
 
 const hackathons = [
-    { name: "branson - Voluntir", url: "../voluntir/"}
+    { name: "Branson - Voluntir", url: "../voluntir/"}
 ];
 
 const ozymandias = `I met a traveller from an antique land,
@@ -186,13 +186,15 @@ function addProjects() {
 function addHackathons() {
     let i = 0;
 
+    console.log("Reached Hackathons!");
+
     function next() {
         if (i < hackathons.length) {
             const link = document.createElement("a");
             link.href = hackathons[i].url;
             link.textContent = `  ${i + 1}. ${hackathons[i].name}`;
             link.style.display = "block";
-            link.style.color = "#00ff1eff";          // white
+            link.style.color = "#00ff1eff";
             link.style.textDecoration = "none";
             link.onmouseover = () => link.style.textDecoration = "underline";
             link.onmouseout = () => link.style.textDecoration = "none";
