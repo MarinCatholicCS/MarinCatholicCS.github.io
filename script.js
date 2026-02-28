@@ -23,6 +23,10 @@ const officers = [
 
 ];
 
+const hackathons = [
+    { name: "branson - Voluntir", url: "../voluntir/"}
+];
+
 const ozymandias = `I met a traveller from an antique land,
 Who said—"Two vast and trunkless legs of stone
 Stand in the desert. . . . Near them, on the sand,
@@ -171,6 +175,33 @@ function addProjects() {
             i++;
             setTimeout(next, 120);
         } else {
+            terminal.appendChild(document.createTextNode("\n$ hackathons\n"));
+            addHackathons();
+        }
+    }
+
+    next();
+}
+
+function addHackathons() {
+    let i = 0;
+
+    function next() {
+        if (i < hackathons.length) {
+            const link = document.createElement("a");
+            link.href = hackathons[i].url;
+            link.textContent = `  ${i + 1}. ${hackathons[i].name}`;
+            link.style.display = "block";
+            link.style.color = "#00ff1eff";          // white
+            link.style.textDecoration = "none";
+            link.onmouseover = () => link.style.textDecoration = "underline";
+            link.onmouseout = () => link.style.textDecoration = "none";
+
+            terminal.appendChild(link);
+
+            i++;
+            setTimeout(next, 120);
+        } else {
             terminal.appendChild(document.createTextNode("\n$ officers\n"));
             addOfficers();
         }
@@ -178,7 +209,6 @@ function addProjects() {
 
     next();
 }
-
 
 function addOfficers() {
     let i = 0;
