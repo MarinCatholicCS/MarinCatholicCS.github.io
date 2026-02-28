@@ -186,13 +186,11 @@ function addProjects() {
 function addHackathons() {
     let i = 0;
 
-    console.log("Reached Hackathons!");
-
     function next() {
         if (i < hackathons.length) {
             const link = document.createElement("a");
             link.href = hackathons[i].url;
-            link.textContent = `  ${i + 1}. ${hackathons[i].name}`;
+            link.textContent = `  - ${hackathons[i].name}`;
             link.style.display = "block";
             link.style.color = "#00ff1eff";
             link.style.textDecoration = "none";
