@@ -11,7 +11,7 @@ const projects = [
 
     { name: "flappymo", url: "../flappymo/" },
     { name: "wildchat", url: "../chatatmc/" },
-    { name: "rate my teacher (coming soon)", url: "/" }
+    // { name: "rate my teacher (coming soon)", url: "/" }
 ];
 
 const officers = [
@@ -24,7 +24,7 @@ const officers = [
 ];
 
 const hackathons = [
-    { name: "Branson - Voluntir", url: "../voluntir/"}
+    { name: "BullHacks 2026 - Voluntir - 1st Place, $1000", url: "../voluntir/" }
 ];
 
 const ozymandias = `I met a traveller from an antique land,
