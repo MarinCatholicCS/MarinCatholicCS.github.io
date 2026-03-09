@@ -1,7 +1,7 @@
 const textIntro = `$ whoami
 Marin Catholic Computer Science Club
 
-$ projects
+$ hackathons
 `;
 
 // append new projects here
@@ -24,7 +24,7 @@ const officers = [
 ];
 
 const hackathons = [
-    { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
+    { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
     { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" }
 ];
 
@@ -77,7 +77,7 @@ const mc_ascii = `
 %@%%%%@           @%%%%%%%%%%@      @@@%%%%%%%%@@@%%%%%%%%%%%%@@@    @%@%%%%%%%%%@           @%%%%%@
 %@%%%%@           %@%%%%%%%%%@     @@@%%%%%%%%%@@@%%%%%%%%%%%%@@@    @%@%%%%%%%%%@           @%%%%%@
 %@%%%%@           %@%%%%%%%%%@     @%@@%@%%%%%%%@@@@%%%%%%%%%%@%@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%%@@@%%%%%%%%@@@@@@@@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
+%@%%%%@           %@%%%%%%%%%@     @%%@@@%%%%%%%%@@@@@@@@%%%%%@%@    @%@%%%%%%%%%@           @%%%%%@
 %@%%%%@           %@%%%%%%%%%@     @%%%@@@@%%%%%%%%@   %@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
 %@%%%%@           %@%%%%%%%%%@     @%%%%%@@%%%%%%%%@%  @@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
 %@%%%%@           %@%%%%%%%%%@     @%%%%@@@%@%%%%%%%@@@@@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
@@ -87,30 +87,40 @@ const mc_ascii = `
 %@%%%@@          @@@%%%%%%%%%%     @%%%%%%@@   @@%@                  @%@%%%%%%%%%@           @%%%%%@
 %@%%%%@       @%@@%@%%%%%%%%@%@%%  @%%%%%%@@    @@                 %@%@%%%%%%%%%@%@@@@      @%%%%%%@
 @@%%%@@       @%%%%%%%%%%%%%%%%%%  @%%%%%%@@                       %@%%%%%%%%%%%%%%%%@      @@%%%%%@
-%%%%%%@@      @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@     @@%%%%@% 
-%@@%%%%@@     @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@    @%%%%%@@@ 
- @@%%%%@@@    @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@   @@%%%%%%@  
-  %@%%%%%%%   @@@%%%%%%%%%%%%%%%@  @@%%%%%@@            @@@@@@@@   %@@%%%%%%%%%%%%@%@   %@%%%%%%@   
-   @%@%%%%%@@                      @@%%%%%@@           @%%%%%%%%@                      %@%%%%%@%@   
-    @%%%%%%%%@                     @@%%%%%@@           @@%%%%%@%@                    @@@%%%%@@@     
-     @%@%%%%%%@@                   @@%%%%%@@           @@%%%%%@%@                   @%%%%%%@%@      
-       @@%%%%%@%%@                 @@%%%%%%@           @%%%%%%@%@                 @%@%%%%%%%        
-        @@@%%%%%@@@@               @@%%%%%@@@@@@@@@@@@@@%%%%%%@@@               @@%%%%%%%@@         
-          @%@%%%%%%@@@             @%%%%%%%%%%%%%%%%%%%%%%%%%%%%              @%%%%%%%%%@           
-            @@@%%%%%%@@@           @@@%%%%%%%%%%%%%%%%%%%%%%%@@%           @@%@%%%%%%%@             
-              @%%@%%%%%@@@          @@%@@@@@@@@@@@@@@@@@@@@@%%@          @%%%%%%%%@@@               
-                @%%%%%%%%@%@%         @@@@@@@@@@@@@@@@@@@@@%@          @@@@%%%%%%%@                 
-                  @@%%%%%%%@%%@@                                    @@@%%%%%%%@@@@                  
-                    @%@%%%%%%%@@@@@                              @%%@%%%%%%%@@@                     
-                       @@%@%%%%%%%%@@@                        @@%%%%%%%%%@@%@                       
-                          @%%@%%%%%%%%%@                    %@%%%%%%%%@@@@                          
-                            @%@%%%%%%%%%%@@%             @@%@%%%%%%%%@@@                            
-                               @@%@%%%%%%%%%@@@      %@%@%%%%%%%%%@@@                               
-                                  @@@%%%%%%%%%%%%@@@%%%%%%%%%%%@@@                                  
-                                     @@%@@%%%%%%%%%%%%%%%%@@%@@                                     
-                                         @%@%%%%%%%%%%%%%%%%                                        
-                                           @@%%%%%%%%@%@@                                           
+%%%%%%@@      @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@     @@%%%%@%
+%@@%%%%@@     @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@    @%%%%%@@@
+ @@%%%%@@@    @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@   @@%%%%%%@
+  %@%%%%%%%   @@@%%%%%%%%%%%%%%%@  @@%%%%%@@            @@@@@@@@   %@@%%%%%%%%%%%%@%@   %@%%%%%%@
+   @%@%%%%%@@                      @@%%%%%@@           @%%%%%%%%@                      %@%%%%%@%@
+    @%%%%%%%%@                     @@%%%%%@@           @@%%%%%@%@                    @@@%%%%@@@
+     @%@%%%%%%@@                   @@%%%%%@@           @@%%%%%@%@                   @%%%%%%@%@
+       @@%%%%%@%%@                 @@%%%%%%@           @%%%%%%@%@                 @%@%%%%%%%
+        @@@%%%%%@@@@               @@%%%%%@@@@@@@@@@@@@@%%%%%%@@@               @@%%%%%%%@@
+          @%@%%%%%%@@@             @%%%%%%%%%%%%%%%%%%%%%%%%%%%%              @%%%%%%%%%@
+            @@@%%%%%%@@@           @@@%%%%%%%%%%%%%%%%%%%%%%%@@%           @@%@%%%%%%%@
+              @%%@%%%%%@@@          @@%@@@@@@@@@@@@@@@@@@@@@%%@          @%%%%%%%%@@@
+                @%%%%%%%%@%@%         @@@@@@@@@@@@@@@@@@@@@%@          @@@@%%%%%%%@
+                  @@%%%%%%%@%%@@                                    @@@%%%%%%%@@@@
+                    @%@%%%%%%%@@@@@                              @%%@%%%%%%%@@@
+                       @@%@%%%%%%%%@@@                        @@%%%%%%%%%@@%@
+                          @%%@%%%%%%%%%@                    %@%%%%%%%%@@@@
+                            @%@%%%%%%%%%%@@%             @@%@%%%%%%%%@@@
+                               @@%@%%%%%%%%%@@@      %@%@%%%%%%%%%@@@
+                                  @@@%%%%%%%%%%%%@@@%%%%%%%%%%%@@@
+                                     @@%@@%%%%%%%%%%%%%%%%@@%@@
+                                         @%@%%%%%%%%%%%%%%%%
+                                           @@%%%%%%%%@%@@
                                               @@@%%@@@        `
+
+const helpText = [
+    { cmd: "help", desc: "show this message" },
+    { cmd: "whoami", desc: "existential crisis" },
+    { cmd: "sudo", desc: "try it" },
+    { cmd: "ozymandias", desc: "a poem" },
+    { cmd: "mc", desc: "ascii art" },
+    { cmd: "clear", desc: "clear the terminal" },
+    { cmd: "1-4", desc: "open a project" },
+];
 
 const terminal = document.getElementById('terminal');
 const cursor = document.createElement('span');
@@ -125,7 +135,7 @@ function typeIntro() {
         terminal.textContent += textIntro.charAt(index++);
         setTimeout(typeIntro, typingSpeed);
     } else {
-        addProjects();
+        addHackathons();
     }
 }
 
@@ -138,9 +148,13 @@ function cmd_handler(command) {
     } else if (command === "ozymandias") {
         outputText = ozymandias;
     } else if (command === "gavin") {
-        outputText = "newsom🥀💔";
+        outputText = "newsom\u{1F940}\u{1F494}";
     } else if (command === "mc") {
-        outputText = mc_ascii;
+        return { type: "ascii", text: mc_ascii };
+    } else if (command === "help") {
+        return { type: "help" };
+    } else if (command === "clear") {
+        return { type: "clear" };
     } else if (command === "1") {
         window.location.replace(projects[0].url);
     } else if (command === "2") {
@@ -157,6 +171,23 @@ function cmd_handler(command) {
     return outputText;
 }
 
+function renderHelp() {
+    const frag = document.createDocumentFragment();
+    helpText.forEach(h => {
+        const line = document.createElement('div');
+        const cmd = document.createElement('span');
+        cmd.textContent = `  ${h.cmd.padEnd(14)}`;
+        cmd.className = 'help-cmd';
+        const desc = document.createElement('span');
+        desc.textContent = h.desc;
+        desc.className = 'help-text';
+        line.appendChild(cmd);
+        line.appendChild(desc);
+        frag.appendChild(line);
+    });
+    return frag;
+}
+
 function addProjects() {
     let i = 0;
 
@@ -165,19 +196,15 @@ function addProjects() {
             const link = document.createElement("a");
             link.href = projects[i].url;
             link.textContent = `  ${i + 1}. ${projects[i].name}`;
-            link.style.display = "block";
-            link.style.color = "#00ff1eff";          // white
-            link.style.textDecoration = "none";
-            link.onmouseover = () => link.style.textDecoration = "underline";
-            link.onmouseout = () => link.style.textDecoration = "none";
+            link.className = "terminal-link";
 
             terminal.appendChild(link);
 
             i++;
             setTimeout(next, 120);
         } else {
-            terminal.appendChild(document.createTextNode("\n$ hackathons\n"));
-            addHackathons();
+            terminal.appendChild(document.createTextNode("\n$ officers\n"));
+            addOfficers();
         }
     }
 
@@ -192,19 +219,18 @@ function addHackathons() {
             const link = document.createElement("a");
             link.href = hackathons[i].url;
             link.textContent = `  - ${hackathons[i].name}`;
-            link.style.display = "block";
-            link.style.color = "#00ff1eff";
-            link.style.textDecoration = "none";
-            link.onmouseover = () => link.style.textDecoration = "underline";
-            link.onmouseout = () => link.style.textDecoration = "none";
+            link.className = "terminal-link";
+            if (hackathons[i].highlight) {
+                link.classList.add("highlight");
+            }
 
             terminal.appendChild(link);
 
             i++;
             setTimeout(next, 120);
         } else {
-            terminal.appendChild(document.createTextNode("\n$ officers\n"));
-            addOfficers();
+            terminal.appendChild(document.createTextNode("\n$ projects\n"));
+            addProjects();
         }
     }
 
@@ -220,23 +246,13 @@ function addOfficers() {
                 const link = document.createElement("a");
                 link.href = officers[i].url;
                 link.textContent = `  - ${officers[i].name}`;
-                link.style.display = "block";
-                link.style.color = "#00ff1eff";
-                link.style.textDecoration = "none";
-                link.onmouseover = () => link.style.textDecoration = "underline";
-                link.onmouseout = () => link.style.textDecoration = "none";
+                link.className = "terminal-link";
 
                 terminal.appendChild(link);
             } else {
-
-
-
-
                 const line = document.createElement("div");
                 line.textContent = `  - ${officers[i].name}`;
-                line.style.color = "#00ff1eff";          // white
-                line.onmouseover = () => line.style.textDecoration = "underline";
-                line.onmouseout = () => line.style.textDecoration = "none";
+                line.className = "officer-line";
                 terminal.appendChild(line);
             }
             i++;
@@ -276,13 +292,36 @@ function enableTyping() {
             terminal.insertBefore(lineBreak1, cursor);
 
             if (command) {
-                const outputText = cmd_handler(command);
+                const result = cmd_handler(command);
 
-                const output = document.createTextNode(outputText);
-                const lineBreak2 = document.createElement("br");
+                if (result && result.type === "clear") {
+                    // Clear terminal and re-show prompt
+                    terminal.textContent = '';
+                    const newPrompt = document.createTextNode('$ ');
+                    terminal.appendChild(newPrompt);
 
-                terminal.insertBefore(output, cursor);
-                terminal.insertBefore(lineBreak2, cursor);
+                    if (currentInputLine && currentInputLine.parentNode) {
+                        currentInputLine.remove();
+                    }
+                    currentInputLine = document.createElement('span');
+                    currentInputLine.className = 'input-line';
+                    terminal.appendChild(currentInputLine);
+                    terminal.appendChild(cursor);
+                    return;
+                } else if (result && result.type === "ascii") {
+                    const pre = document.createElement('pre');
+                    pre.className = 'ascii-art';
+                    pre.textContent = result.text;
+                    terminal.insertBefore(pre, cursor);
+                } else if (result && result.type === "help") {
+                    const helpFrag = renderHelp();
+                    terminal.insertBefore(helpFrag, cursor);
+                } else if (typeof result === 'string') {
+                    const output = document.createTextNode(result);
+                    const lineBreak2 = document.createElement("br");
+                    terminal.insertBefore(output, cursor);
+                    terminal.insertBefore(lineBreak2, cursor);
+                }
             }
 
             const newPrompt = document.createTextNode('$ ');

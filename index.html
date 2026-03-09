@@ -4,13 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
     <meta name="description" content="Marin Catholic Computer Science Home Page">
     <title>Marin Catholic Computer Science Club</title>
 </head>
 <body>
-    <div id="terminal"></div>
-    
+    <div class="terminal-window">
+        <div class="title-bar">
+            <div class="title-buttons">
+                <span class="btn-close"></span>
+                <span class="btn-minimize"></span>
+                <span class="btn-maximize"></span>
+            </div>
+            <div class="title-text">mc@cs-club: ~</div>
+        </div>
+        <div id="terminal"></div>
+        <div class="scanlines"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
