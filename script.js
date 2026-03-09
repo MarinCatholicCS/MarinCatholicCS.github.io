@@ -24,7 +24,8 @@ const officers = [
 ];
 
 const hackathons = [
-    { name: "StangHacks 2026 - Voluntir ", url: "../voluntir/" }
+    { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
+    { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" }
 ];
 
 const ozymandias = `I met a traveller from an antique land,
