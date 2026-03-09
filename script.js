@@ -15,8 +15,8 @@ const projects = [
 ];
 
 const officers = [
-    { name: "Stanley Ho — Co-President" },
-    { name: "Nico Zametto — Co-President" },
+    { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338/" },
+    { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4/" },
     { name: "Gavin Perry - First Officer" },
     { name: "Alex Willard — Second Officer" },
     { name: "Mo Adib - Moderator" }
@@ -216,15 +216,32 @@ function addOfficers() {
 
     function next() {
         if (i < officers.length) {
-            const line = document.createElement("div");
-            line.textContent = `  - ${officers[i].name}`;
-            line.style.color = "#00ff1eff";          // white
-            line.onmouseover = () => line.style.textDecoration = "underline";
-            line.onmouseout = () => line.style.textDecoration = "none";
-            terminal.appendChild(line);
+            if (officers[i].url) {
+                const link = document.createElement("a");
+                link.href = officers[i].url;
+                link.textContent = `  - ${officers[i].name}`;
+                link.style.display = "block";
+                link.style.color = "#00ff1eff";
+                link.style.textDecoration = "none";
+                link.onmouseover = () => link.style.textDecoration = "underline";
+                link.onmouseout = () => link.style.textDecoration = "none";
 
+                terminal.appendChild(link);
+            } else {
+
+
+
+
+                const line = document.createElement("div");
+                line.textContent = `  - ${officers[i].name}`;
+                line.style.color = "#00ff1eff";          // white
+                line.onmouseover = () => line.style.textDecoration = "underline";
+                line.onmouseout = () => line.style.textDecoration = "none";
+                terminal.appendChild(line);
+            }
             i++;
             setTimeout(next, 120);
+
         } else {
             terminal.appendChild(document.createTextNode("\n$ "));
             terminal.appendChild(cursor);
