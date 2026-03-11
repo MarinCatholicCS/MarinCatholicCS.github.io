@@ -20,6 +20,12 @@ const APP_ICONS = {
         <line x1="6" y1="5" x2="6" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         <circle cx="6" cy="3" r=".7" fill="currentColor"/>
     </svg>`,
+    browser: `<svg width="12" height="11" viewBox="0 0 12 11" fill="none">
+        <rect x=".8" y=".8" width="10.4" height="9.4" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+        <line x1=".8" y1="3.5" x2="11.2" y2="3.5" stroke="currentColor" stroke-width="1.1"/>
+        <circle cx="2.8" cy="2.2" r=".6" fill="currentColor"/>
+        <circle cx="4.8" cy="2.2" r=".6" fill="currentColor"/>
+    </svg>`,
 };
 
 // ════════════════════════════════════════════════════════
@@ -142,6 +148,7 @@ const helpText = [
     { cmd: "sudo",       desc: "try it" },
     { cmd: "ozymandias", desc: "a poem" },
     { cmd: "mc",         desc: "ascii art" },
+    { cmd: "konata",     desc: "✴" },
     { cmd: "clear",      desc: "clear the terminal" },
     { cmd: "1-4",        desc: "open a project" },
 ];
@@ -448,19 +455,66 @@ const AppRegistry = {
         },
     },
 
+    _savedPositions: {},
+
     launch(id, opts = {}) {
         const app = this.apps[id];
         if (!app) return;
+
+        // Toggle: if already open, save position and close
+        if (WindowManager.windows[id]) {
+            const el = WindowManager.windows[id].el;
+            this._savedPositions[id] = {
+                x: parseInt(el.style.left), y: parseInt(el.style.top),
+                w: el.offsetWidth, h: el.offsetHeight,
+            };
+            WindowManager.close(id);
+            return;
+        }
+
         const dW = window.innerWidth, dH = window.innerHeight - PANEL_H;
         const w  = app.w(dW), h = app.h(dH);
         const stagger = id === 'projects' ? 28 : id === 'about' ? 14 : 0;
+        const saved = this._savedPositions[id];
         WindowManager.create({
             id, title: app.title,
-            width: w, height: h,
-            x: opts.x ?? Math.max(0, Math.floor((dW - w) / 2) + stagger),
-            y: opts.y ?? PANEL_H + Math.max(0, Math.floor((dH - h) / 2) - 16) + stagger,
+            width:  saved?.w ?? w,
+            height: saved?.h ?? h,
+            x: saved?.x ?? opts.x ?? Math.max(0, Math.floor((dW - w) / 2) + stagger),
+            y: saved?.y ?? opts.y ?? PANEL_H + Math.max(0, Math.floor((dH - h) / 2) - 16) + stagger,
             buildContent: app.build,
             scanlines:    app.scanlines,
+        });
+    },
+
+    _browserPositions: {},
+
+    launchBrowser(name, url) {
+        const id = `browser-${name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}`;
+
+        // Toggle: if already open, save position and close
+        if (WindowManager.windows[id]) {
+            const el = WindowManager.windows[id].el;
+            this._browserPositions[id] = {
+                x: parseInt(el.style.left), y: parseInt(el.style.top),
+                w: el.offsetWidth, h: el.offsetHeight,
+            };
+            WindowManager.close(id);
+            return;
+        }
+
+        APP_ICONS[id] = APP_ICONS.browser;
+        const dW = window.innerWidth, dH = window.innerHeight - PANEL_H;
+        const saved = this._browserPositions[id];
+        const w = saved?.w ?? Math.min(1000, dW - 60);
+        const h = saved?.h ?? Math.min(680, dH - 40);
+        WindowManager.create({
+            id, title: name,
+            width: w, height: h,
+            x: saved?.x ?? Math.max(0, Math.floor((dW - w) / 2) + 24),
+            y: saved?.y ?? PANEL_H + Math.max(0, Math.floor((dH - h) / 2)) + 24,
+            buildContent: container => buildBrowserContent(container, url),
+            scanlines: false,
         });
     },
 };
@@ -505,16 +559,13 @@ const IconSystem = {
                 document.removeEventListener('mousemove', onMove);
                 document.removeEventListener('mouseup',   onUp);
                 el.classList.remove('dragging');
+                if (!dragStarted && appId) AppRegistry.launch(appId);
                 dragStarted = false;
             };
             document.addEventListener('mousemove', onMove);
             document.addEventListener('mouseup',   onUp);
         });
 
-        el.addEventListener('dblclick', e => {
-            e.stopPropagation();
-            if (appId) AppRegistry.launch(appId);
-        });
     },
 
     select(el) {
@@ -622,7 +673,9 @@ const ContextMenu = {
 // ════════════════════════════════════════════════════════
 
 const WallpaperCanvas = {
-    canvas: null, ctx: null, particles: [], animId: null,
+    canvas: null, ctx: null, drops: [], animId: null, _last: 0,
+    CHARS: '01',
+    COL_W: 14,
 
     init() {
         this.canvas = document.getElementById('desktop-canvas');
@@ -632,74 +685,61 @@ const WallpaperCanvas = {
         window.addEventListener('resize', () => this._resize());
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) { cancelAnimationFrame(this.animId); }
-            else                 { this._animate(); }
+            else                 { this._animate(0); }
         });
-        this._animate();
+        this._animate(0);
     },
 
     _resize() {
         this.canvas.width  = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this._spawn();
+        const cols = Math.floor(this.canvas.width / this.COL_W);
+        this.drops = Array.from({ length: cols }, () => -Math.floor(Math.random() * 80));
     },
 
-    _spawn() {
-        const W = this.canvas.width, H = this.canvas.height;
-        const count = Math.floor(W * H / 18000); // ~115 on 1080p
-        this.particles = Array.from({ length: count }, () => {
-            const green = Math.random() < 0.12; // 12% green-tinted
-            return {
-                x: Math.random() * W, y: Math.random() * H,
-                r: Math.random() * 1.1 + 0.3,
-                vx: (Math.random() - 0.5) * 0.07,
-                vy: (Math.random() - 0.5) * 0.07,
-                opacity: Math.random() * 0.35 + 0.08,
-                twinkleSpeed: Math.random() * 1.8 + 0.4,
-                twinklePhase: Math.random() * Math.PI * 2,
-                green,
-            };
-        });
-    },
+    _animate(ts) {
+        this.animId = requestAnimationFrame(t => this._animate(t));
+        if (ts - this._last < 42) return; // ~24 fps
+        this._last = ts;
 
-    _animate() {
-        const { ctx, canvas, particles } = this;
+        const { ctx, canvas, drops, CHARS, COL_W } = this;
         const W = canvas.width, H = canvas.height;
-        const t = Date.now() * 0.001;
 
-        ctx.clearRect(0, 0, W, H);
+        // Fade overlay — creates the trailing effect
+        ctx.fillStyle = 'rgba(11,13,20,0.06)';
+        ctx.fillRect(0, 0, W, H);
 
-        // Connections between nearby green particles
-        const greens = particles.filter(p => p.green);
-        for (let i = 0; i < greens.length; i++) {
-            for (let j = i + 1; j < greens.length; j++) {
-                const dx = greens[i].x - greens[j].x, dy = greens[i].y - greens[j].y;
-                const d  = Math.sqrt(dx * dx + dy * dy);
-                if (d < 90) {
-                    ctx.strokeStyle = `rgba(0,255,65,${(1 - d / 90) * 0.045})`;
-                    ctx.lineWidth   = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(greens[i].x, greens[i].y);
-                    ctx.lineTo(greens[j].x, greens[j].y);
-                    ctx.stroke();
-                }
+        ctx.font = `${COL_W - 1}px "Fira Code", monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const y = drops[i];
+            if (y < 0) { drops[i]++; continue; }
+
+            const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+            const x  = i * COL_W;
+
+            // Head character: bright green
+            ctx.fillStyle = '#00ff41';
+            ctx.shadowColor = '#00ff41';
+            ctx.shadowBlur  = 8;
+            ctx.fillText(ch, x, y * COL_W);
+
+            // Second character: slightly dimmer
+            if (y > 0) {
+                ctx.fillStyle = 'rgba(0,200,50,0.7)';
+                ctx.shadowBlur = 4;
+                ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, (y - 1) * COL_W);
+            }
+
+            ctx.shadowBlur = 0;
+
+            // Reset column randomly once it goes off-screen
+            if (y * COL_W > H && Math.random() > 0.975) {
+                drops[i] = -Math.floor(Math.random() * 40);
+            } else {
+                drops[i]++;
             }
         }
-
-        // Particles
-        for (const p of particles) {
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0) p.x = W; else if (p.x > W) p.x = 0;
-            if (p.y < 0) p.y = H; else if (p.y > H) p.y = 0;
-
-            const tw    = Math.sin(t * p.twinkleSpeed + p.twinklePhase) * 0.15 + 0.85;
-            const alpha = p.opacity * tw;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.green ? `rgba(0,255,65,${alpha * 0.8})` : `rgba(255,255,255,${alpha})`;
-            ctx.fill();
-        }
-
-        this.animId = requestAnimationFrame(() => this._animate());
     },
 };
 
@@ -735,13 +775,28 @@ function buildTerminalContent(container) {
 function initTerminal(termDiv) {
     const cursor = document.createElement('span');
     cursor.className = 'cursor';
-    let charIndex = 0, currentInputLine = null;
+    let currentInputLine = null;
+
+    // Helper: append a line of text (decrypt it), then call cb
+    function decryptAppendLine(text, cb) {
+        if (!text.trim()) {
+            termDiv.appendChild(document.createTextNode(text + '\n'));
+            cb(); return;
+        }
+        const span = document.createElement('span');
+        span.textContent = text;
+        termDiv.appendChild(span);
+        termDiv.appendChild(document.createTextNode('\n'));
+        DecryptEffect.runElParallel(span, cb);
+    }
 
     function typeIntro() {
-        if (charIndex < textIntro.length) {
-            termDiv.textContent += textIntro.charAt(charIndex++);
-            setTimeout(typeIntro, 30);
-        } else { addHackathons(); }
+        const lines = textIntro.split('\n').filter((_, i, a) => i < a.length - 1 || a[i]);
+        let i = 0;
+        (function nextLine() {
+            if (i >= lines.length) { addHackathons(); return; }
+            decryptAppendLine(lines[i++], nextLine);
+        })();
     }
 
     function cmd_handler(command) {
@@ -750,6 +805,7 @@ function initTerminal(termDiv) {
         if (command === 'ozymandias') return ozymandias;
         if (command === 'gavin')      return 'newsom\u{1F940}\u{1F494}';
         if (command === 'mc')         return { type: 'ascii', text: mc_ascii };
+        if (command === 'konata')     return { type: 'konata' };
         if (command === 'help')       return { type: 'help' };
         if (command === 'clear')      return { type: 'clear' };
         const n = parseInt(command);
@@ -774,8 +830,9 @@ function initTerminal(termDiv) {
             if (i < projects.length) {
                 const a = document.createElement('a');
                 a.href = projects[i].url; a.textContent = `  ${i + 1}. ${projects[i].name}`; a.className = 'terminal-link';
-                termDiv.appendChild(a); i++; setTimeout(next, 120);
-            } else { termDiv.appendChild(document.createTextNode('\n$ officers\n')); addOfficers(); }
+                termDiv.appendChild(a); i++;
+                DecryptEffect.runElParallel(a, next);
+            } else { decryptAppendLine('\n$ officers', addOfficers); }
         })();
     }
 
@@ -786,8 +843,9 @@ function initTerminal(termDiv) {
                 const a = document.createElement('a');
                 a.href = hackathons[i].url; a.textContent = `  - ${hackathons[i].name}`; a.className = 'terminal-link';
                 if (hackathons[i].highlight) a.classList.add('highlight');
-                termDiv.appendChild(a); i++; setTimeout(next, 120);
-            } else { termDiv.appendChild(document.createTextNode('\n$ projects\n')); addProjects(); }
+                termDiv.appendChild(a); i++;
+                DecryptEffect.runElParallel(a, next);
+            } else { decryptAppendLine('\n$ projects', addProjects); }
         })();
     }
 
@@ -795,16 +853,18 @@ function initTerminal(termDiv) {
         let i = 0;
         (function next() {
             if (i < officers.length) {
+                let el;
                 if (officers[i].url) {
-                    const a = document.createElement('a');
-                    a.href = officers[i].url; a.textContent = `  - ${officers[i].name}`; a.className = 'terminal-link';
-                    termDiv.appendChild(a);
+                    el = document.createElement('a');
+                    el.href = officers[i].url; el.className = 'terminal-link';
                 } else {
-                    const d = document.createElement('div');
-                    d.textContent = `  - ${officers[i].name}`; d.className = 'officer-line';
-                    termDiv.appendChild(d);
+                    el = document.createElement('div');
+                    el.className = 'officer-line';
                 }
-                i++; setTimeout(next, 120);
+                el.textContent = `  - ${officers[i].name}`;
+                termDiv.appendChild(el);
+                i++;
+                DecryptEffect.runElParallel(el, next);
             } else {
                 termDiv.appendChild(document.createTextNode('\n$ '));
                 termDiv.appendChild(cursor);
@@ -868,6 +928,19 @@ function initTerminal(termDiv) {
                     } else if (result?.type === 'ascii') {
                         const pre = document.createElement('pre'); pre.className = 'ascii-art'; pre.textContent = result.text;
                         termDiv.insertBefore(pre, cursor);
+                    } else if (result?.type === 'konata') {
+                        const pre = document.createElement('pre'); pre.className = 'konata-art';
+                        pre.textContent = [
+                            '                    /|',
+                            '                   / |   /)/',
+                            '                  /  |  ///',
+                            '    (\\(\\ /\\_____/   | ///   Kona-chan',
+                            '    ( -.-)/ MC-OS  \\__|/    ',
+                            '    o_(")(")               ',
+                            '',
+                            '  Lucky Channel!',
+                        ].join('\n');
+                        termDiv.insertBefore(pre, cursor);
                     } else if (result?.type === 'help') {
                         termDiv.insertBefore(renderHelp(), cursor);
                     } else if (typeof result === 'string') {
@@ -898,10 +971,10 @@ function initTerminal(termDiv) {
 // ════════════════════════════════════════════════════════
 
 const PROJECT_FILES = [
-    { name: 'getmo.exe',      url: 'https://marincatholiccs.github.io/getmo/' },
-    { name: 'mo-sweeper.exe', url: 'https://marincatholiccs.github.io/mosweeper/' },
-    { name: 'flappymo.exe',   url: 'https://marincatholiccs.github.io/flappymo/' },
-    { name: 'wildchat.exe',   url: 'https://marincatholiccs.github.io/chatatmc/' },
+    { name: 'getmo',      url: 'https://marincatholiccs.github.io/getmo/' },
+    { name: 'mo-sweeper', url: 'https://marincatholiccs.github.io/mosweeper/' },
+    { name: 'flappymo',   url: 'https://marincatholiccs.github.io/flappymo/' },
+    { name: 'wildchat',   url: 'https://marincatholiccs.github.io/chatatmc/' },
 ];
 
 function buildProjectsContent(container) {
@@ -918,8 +991,6 @@ function buildProjectsContent(container) {
     const body = document.createElement('div');
     body.className = 'folder-body';
 
-    let selected = null;
-
     PROJECT_FILES.forEach(f => {
         const item = document.createElement('div');
         item.className = 'file-item';
@@ -933,28 +1004,17 @@ function buildProjectsContent(container) {
             </div>
             <div class="file-name">${f.name}</div>`;
 
+        const id = `browser-${f.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}`;
         item.addEventListener('click', e => {
             e.stopPropagation();
-            if (selected) selected.classList.remove('selected');
-            selected = item;
-            item.classList.add('selected');
-            statusBar.textContent = `${f.name}  —  double-click to open`;
-        });
-
-        item.addEventListener('dblclick', e => {
-            e.stopPropagation();
-            window.open(f.url, '_blank', 'noopener');
+            AppRegistry.launchBrowser(f.name, f.url);
+            // Reflect open/closed state visually
+            const isNowOpen = !!WindowManager.windows[id];
+            item.classList.toggle('selected', isNowOpen);
+            statusBar.textContent = isNowOpen ? `${f.name}  —  click to close` : `${PROJECT_FILES.length} items`;
         });
 
         body.appendChild(item);
-    });
-
-    body.addEventListener('click', () => {
-        if (selected) {
-            selected.classList.remove('selected');
-            selected = null;
-            statusBar.textContent = `${PROJECT_FILES.length} items`;
-        }
     });
 
     const statusBar = document.createElement('div');
@@ -964,6 +1024,38 @@ function buildProjectsContent(container) {
     container.appendChild(addrBar);
     container.appendChild(body);
     container.appendChild(statusBar);
+}
+
+// ════════════════════════════════════════════════════════
+//  Browser App  —  iframe window
+// ════════════════════════════════════════════════════════
+
+function buildBrowserContent(container, url) {
+    container.classList.add('browser-window');
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'browser-toolbar';
+    toolbar.innerHTML = `
+        <a class="browser-ext-btn has-tooltip" href="${url}" target="_blank" rel="noopener" data-tooltip="Open in new tab">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                <path d="M4.5 2H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M7 1h3v3M10 1L5.5 5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>`;
+
+    const loading = document.createElement('div');
+    loading.className = 'browser-loading';
+    loading.textContent = 'Loading…';
+
+    const frame = document.createElement('iframe');
+    frame.className = 'browser-iframe';
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups');
+    frame.src = url;
+    frame.addEventListener('load', () => loading.remove(), { once: true });
+
+    container.appendChild(toolbar);
+    container.appendChild(loading);
+    container.appendChild(frame);
 }
 
 // ════════════════════════════════════════════════════════
@@ -1156,6 +1248,124 @@ const Toast = {
 };
 
 // ════════════════════════════════════════════════════════
+//  DecryptEffect  — scramble → reveal animation
+// ════════════════════════════════════════════════════════
+
+const DecryptEffect = {
+    CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*',
+
+    // Collect words from multiple root elements and animate them sequentially
+    runAll(roots) {
+        const words = [];
+        for (const root of roots) this._collectWords(root, words);
+        if (words.length) this._animateSequence(words, 0);
+    },
+
+    _collectWords(root, out) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+                const p = node.parentElement;
+                if (!p) return NodeFilter.FILTER_REJECT;
+                const tag = p.tagName;
+                if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+                if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                const s = getComputedStyle(p);
+                if (s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0')
+                    return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            },
+        });
+
+        const nodes = [];
+        let n;
+        while ((n = walker.nextNode())) nodes.push(n);
+
+        for (const textNode of nodes) {
+            const text = textNode.textContent;
+            const frag = document.createDocumentFragment();
+            // Split into word tokens and whitespace tokens
+            for (const part of text.split(/(\s+)/)) {
+                if (!part) continue;
+                if (/^\s+$/.test(part)) {
+                    frag.appendChild(document.createTextNode(part));
+                } else {
+                    const span = document.createElement('span');
+                    span.dataset.target = part;
+                    span.textContent = this._scramble(part);
+                    frag.appendChild(span);
+                    out.push(span);
+                }
+            }
+            textNode.parentNode.replaceChild(frag, textNode);
+        }
+    },
+
+    _scramble(word) {
+        return word.split('').map(ch => /[A-Za-z0-9]/.test(ch) ? this._rand() : ch).join('');
+    },
+
+    _rand() {
+        return this.CHARS[Math.floor(Math.random() * this.CHARS.length)];
+    },
+
+    // Decrypt all words in el sequentially, call onDone when complete
+    runEl(el, onDone) {
+        const words = [];
+        this._collectWords(el, words);
+        if (!words.length) { if (onDone) onDone(); return; }
+        const seq = i => {
+            if (i >= words.length) { if (onDone) onDone(); return; }
+            this._decryptWord(words[i], () => seq(i + 1));
+        };
+        seq(0);
+    },
+
+    // Decrypt all words in el simultaneously, call onDone when the last finishes
+    runElParallel(el, onDone, duration = 200) {
+        const words = [];
+        this._collectWords(el, words);
+        if (!words.length) { if (onDone) onDone(); return; }
+        let remaining = words.length;
+        const done = () => { if (--remaining === 0 && onDone) onDone(); };
+        words.forEach(span => this._decryptWord(span, done, duration));
+    },
+
+    _animateSequence(words, index) {
+        if (index >= words.length) return;
+        this._decryptWord(words[index], () => this._animateSequence(words, index + 1));
+    },
+
+    _decryptWord(span, onDone, duration = 320) {
+        const target = span.dataset.target;
+        const chars = target.split('');
+        const alpha = chars.reduce((acc, ch, i) => (/[A-Za-z0-9]/.test(ch) ? [...acc, i] : acc), []);
+
+        if (!alpha.length) { span.textContent = target; if (onDone) onDone(); return; }
+
+        const DURATION = duration;
+        const TICK = 30;
+        const totalTicks = Math.ceil(DURATION / TICK);
+        let tick = 0;
+        const cur = chars.slice();
+        alpha.forEach(i => { cur[i] = this._rand(); });
+        span.textContent = cur.join('');
+
+        const id = setInterval(() => {
+            tick++;
+            const resolved = Math.floor((tick / totalTicks) * alpha.length);
+            for (let i = 0;        i < resolved;      i++) cur[alpha[i]] = chars[alpha[i]];
+            for (let i = resolved; i < alpha.length;  i++) cur[alpha[i]] = this._rand();
+            span.textContent = cur.join('');
+            if (tick >= totalTicks) {
+                clearInterval(id);
+                span.textContent = target;
+                if (onDone) onDone();
+            }
+        }, TICK);
+    },
+};
+
+// ════════════════════════════════════════════════════════
 //  Init
 // ════════════════════════════════════════════════════════
 
@@ -1167,6 +1377,13 @@ window.addEventListener('load', () => {
     SystemPanel.init();
     CommandPalette.init();
     Toast.init();
+
+    // Decrypt animation — panel brand + workspaces + desktop icon labels
+    DecryptEffect.runAll([
+        document.getElementById('panel-left'),
+        document.getElementById('panel-workspaces'),
+        ...document.querySelectorAll('.desktop-icon .icon-label'),
+    ]);
 
     document.getElementById('panel-brand').onclick = () => AppRegistry.launch('terminal');
 
@@ -1192,7 +1409,15 @@ window.addEventListener('load', () => {
         }
     });
 
-    // Boot: open terminal then welcome toast
-    setTimeout(() => AppRegistry.launch('terminal'), 350);
+    // Boot: simulate terminal icon click, then open window
+    setTimeout(() => {
+        const termIcon = document.querySelector('.desktop-icon[data-app="terminal"]');
+        if (termIcon) {
+            termIcon.classList.add('selected');
+            setTimeout(() => { termIcon.classList.remove('selected'); AppRegistry.launch('terminal'); }, 180);
+        } else {
+            AppRegistry.launch('terminal');
+        }
+    }, 350);
     setTimeout(() => Toast.show({ title: 'MC-OS', body: 'Welcome — press Ctrl+K to open commands' }), 1400);
 });
