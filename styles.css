@@ -57,7 +57,7 @@
 body {
     font-family: 'Fira Code', 'Courier New', monospace;
     overflow: hidden; width: 100vw; height: 100vh;
-    background: var(--clr-bg);
+    background: #000;
 }
 
 /* ══════════════════════════════════════════
@@ -65,22 +65,17 @@ body {
 ══════════════════════════════════════════ */
 #desktop {
     position: fixed; inset: 0;
-    background-color: var(--clr-bg);
-    background-image:
-        radial-gradient(ellipse 70% 50% at 12% -10%,  rgba(30,80,40,.25)   0%, transparent 60%),
-        radial-gradient(ellipse 60% 45% at 92% -5%,   rgba(63,185,80,.15)  0%, transparent 60%),
-        radial-gradient(ellipse 100% 25% at 50% 110%,  rgba(0,255,65,.08)   0%, transparent 65%),
-        radial-gradient(circle, rgba(63,185,80,.022) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 52px 52px;
+    background-color: #000;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     animation: desktop-fadein .6s ease forwards;
 }
 @keyframes desktop-fadein { from { opacity:0 } to { opacity:1 } }
 
 #desktop-canvas {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    opacity: .55;
+    display: none;
 }
 
 /* ══════════════════════════════════════════
