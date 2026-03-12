@@ -471,12 +471,9 @@ body {
     white-space: pre-wrap; word-wrap: break-word;
     padding: 14px 18px; flex: 1; overflow-y: auto;
     font-size: 13.5px; line-height: 1.7; color: var(--clr-text);
-    scrollbar-width: thin; scrollbar-color: #1a2a3a var(--clr-bg);
+    scrollbar-width: none;
 }
-.terminal-body::-webkit-scrollbar       { width: 4px; }
-.terminal-body::-webkit-scrollbar-track { background: var(--clr-bg); }
-.terminal-body::-webkit-scrollbar-thumb { background: #1a2a3a; border-radius: 2px; }
-.terminal-body::-webkit-scrollbar-thumb:hover { background: #2a4a6a; }
+.terminal-body::-webkit-scrollbar { display: none; }
 
 .cursor {
     display: inline-block; width: 8px; height: 15px;
