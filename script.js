@@ -1242,6 +1242,28 @@ const Toast = {
         toast.addEventListener('click', dismiss);
     },
 
+    showNowPlaying(title, videoId) {
+        if (!this._container) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        const thumbHtml = videoId
+            ? `<img class="toast-thumb" src="https://i.ytimg.com/vi/${videoId}/default.jpg" alt="" loading="lazy">`
+            : `<svg class="toast-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5 4.5L10 7 5 9.5V4.5z" fill="currentColor"/></svg>`;
+        toast.innerHTML = `
+            ${thumbHtml}
+            <div class="toast-text">
+                <div class="toast-title">now playing</div>
+                <div class="toast-body">${this._esc(title)}</div>
+            </div>`;
+        this._container.appendChild(toast);
+        const dismiss = () => {
+            toast.classList.add('toast-leaving');
+            toast.addEventListener('animationend', () => toast.remove(), { once: true });
+        };
+        setTimeout(dismiss, 5000);
+        toast.addEventListener('click', dismiss);
+    },
+
     _esc(str) {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     },
@@ -1366,6 +1388,153 @@ const DecryptEffect = {
 };
 
 // ════════════════════════════════════════════════════════
+//  Music Player  —  YouTube IFrame API wrapper
+// ════════════════════════════════════════════════════════
+
+const MusicPlayer = {
+    _player:     null,
+    _ready:      false,
+    _playing:    false,
+    _toastShown: false,
+    PLAYLIST_ID: 'PL6NdkXsPL07KN01gH2vucrHCEyyNmVEx4',
+
+    init() {
+        const div = document.createElement('div');
+        div.id = 'yt-player';
+        div.style.cssText = 'position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;top:-9999px;left:-9999px;';
+        document.body.appendChild(div);
+
+        window.onYouTubeIframeAPIReady = () => this._createPlayer();
+        const s = document.createElement('script');
+        s.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(s);
+    },
+
+    _createPlayer() {
+        this._player = new YT.Player('yt-player', {
+            height: '1', width: '1',
+            playerVars: {
+                listType: 'playlist', list: this.PLAYLIST_ID,
+                autoplay: 1, controls: 0, playsinline: 1, enablejsapi: 1,
+            },
+            events: {
+                onReady:       e => this._onReady(e),
+                onStateChange: e => this._onStateChange(e),
+            },
+        });
+    },
+
+    _onReady(event) {
+        this._ready = true;
+        event.target.playVideo();
+    },
+
+    _onStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+            this._playing = true;
+            if (!this._toastShown) {
+                this._toastShown = true;
+                const d = this._player.getVideoData();
+                Toast.showNowPlaying(d.title, d.video_id);
+            }
+        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+            this._playing = false;
+        }
+        VolumeDropdown._updatePlayBtn();
+    },
+
+    play()       { this._player?.playVideo(); },
+    pause()      { this._player?.pauseVideo(); },
+    toggle()     { this._playing ? this.pause() : this.play(); },
+    next()       { this._player?.nextVideo(); },
+    prev()       { this._player?.previousVideo(); },
+    setVolume(v) { this._player?.setVolume(v); },
+    isPlaying()  { return this._playing; },
+};
+
+// ════════════════════════════════════════════════════════
+//  Network Dropdown
+// ════════════════════════════════════════════════════════
+
+const NetworkDropdown = {
+    _open: false, _el: null,
+
+    init() {
+        const btn = document.getElementById('sys-net');
+        this._el  = document.getElementById('net-dropdown');
+        if (!btn || !this._el) return;
+        btn.addEventListener('click', e => { e.stopPropagation(); this.toggle(); });
+        document.addEventListener('click', e => {
+            if (!e.target.closest('#net-dropdown') && !e.target.closest('#sys-net')) this.hide();
+        });
+    },
+
+    toggle() { this._open ? this.hide() : this.show(); },
+    show()   { VolumeDropdown.hide(); this._open = true;  this._el.classList.add('visible'); },
+    hide()   { this._open = false; this._el?.classList.remove('visible'); },
+};
+
+// ════════════════════════════════════════════════════════
+//  Volume Dropdown
+// ════════════════════════════════════════════════════════
+
+const VolumeDropdown = {
+    _open: false,
+    _el: null, _slider: null, _playBtn: null,
+
+    init() {
+        const btn     = document.getElementById('sys-vol');
+        this._el      = document.getElementById('vol-dropdown');
+        this._slider  = document.getElementById('vol-slider');
+        this._playBtn = document.getElementById('vol-play-btn');
+        if (!btn || !this._el) return;
+
+        btn.addEventListener('click', e => { e.stopPropagation(); this.toggle(); });
+
+        this._slider.addEventListener('input', () => {
+            const pct = this._slider.value;
+            this._slider.style.background = `linear-gradient(to right, white ${pct}%, #111811 ${pct}%)`;
+            MusicPlayer.setVolume(+pct);
+        });
+
+        document.getElementById('vol-prev-btn').addEventListener('click', e => {
+            e.stopPropagation(); MusicPlayer.prev();
+        });
+        document.getElementById('vol-next-btn').addEventListener('click', e => {
+            e.stopPropagation(); MusicPlayer.next();
+        });
+        this._playBtn.addEventListener('click', e => {
+            e.stopPropagation(); MusicPlayer.toggle();
+        });
+
+        document.addEventListener('click', e => {
+            if (!e.target.closest('#vol-dropdown') && !e.target.closest('#sys-vol')) this.hide();
+        });
+    },
+
+    toggle() { this._open ? this.hide() : this.show(); },
+
+    show() {
+        NetworkDropdown.hide();
+        this._open = true;
+        this._el.classList.add('visible');
+        this._updatePlayBtn();
+    },
+
+    hide() {
+        this._open = false;
+        this._el?.classList.remove('visible');
+    },
+
+    _updatePlayBtn() {
+        if (!this._playBtn) return;
+        this._playBtn.innerHTML = MusicPlayer.isPlaying()
+            ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="1.5" width="3" height="9" rx=".5" fill="currentColor"/><rect x="7" y="1.5" width="3" height="9" rx=".5" fill="currentColor"/></svg>`
+            : `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 1.5L10.5 6 3 10.5V1.5z" fill="currentColor"/></svg>`;
+    },
+};
+
+// ════════════════════════════════════════════════════════
 //  Init
 // ════════════════════════════════════════════════════════
 
@@ -1377,6 +1546,9 @@ window.addEventListener('load', () => {
     SystemPanel.init();
     CommandPalette.init();
     Toast.init();
+    MusicPlayer.init();
+    VolumeDropdown.init();
+    NetworkDropdown.init();
 
     // Decrypt animation — panel brand + workspaces + desktop icon labels
     DecryptEffect.runAll([
@@ -1419,5 +1591,5 @@ window.addEventListener('load', () => {
             AppRegistry.launch('terminal');
         }
     }, 350);
-    setTimeout(() => Toast.show({ title: 'MC-OS', body: 'Welcome — press Ctrl+K to open commands' }), 1400);
+    // "now playing" toast fires from MusicPlayer._onStateChange on first play
 });
