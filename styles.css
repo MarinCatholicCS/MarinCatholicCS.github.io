@@ -472,8 +472,9 @@ body {
     padding: 14px 18px; flex: 1; overflow-y: auto;
     font-size: 13.5px; line-height: 1.7; color: var(--clr-text);
     scrollbar-width: none;
+    -ms-overflow-style: none;
 }
-.terminal-body::-webkit-scrollbar { display: none; }
+.terminal-body::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
 .cursor {
     display: inline-block; width: 8px; height: 15px;
