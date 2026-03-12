@@ -42,7 +42,7 @@ const projects = [
     { name: "getmo",      url: "../getmo/"     },
     { name: "mo-sweeper", url: "../mosweeper/" },
     { name: "flappymo",   url: "../flappymo/"  },
-    { name: "wildchat",   url: "../chatatmc/"  },
+    { name: "wildchat",   url: "../chatatmc/"  }
 ];
 
 const officers = [
@@ -968,6 +968,7 @@ const PROJECT_FILES = [
     { name: 'mo-sweeper', url: 'https://marincatholiccs.github.io/mosweeper/' },
     { name: 'flappymo',   url: 'https://marincatholiccs.github.io/flappymo/' },
     { name: 'wildchat',   url: 'https://marincatholiccs.github.io/chatatmc/' },
+    { name: 'voluntir',   url: '../voluntir/' },
 ];
 
 function buildProjectsContent(container) {

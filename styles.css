@@ -480,8 +480,8 @@ body {
 }
 @keyframes blink { 0%,48%{opacity:1} 50%,100%{opacity:0} }
 
-.terminal-link { display:block; color:#00d48a; text-decoration:none; transition:color .12s, text-shadow .12s; padding:1px 0; }
-.terminal-link:hover { color:#00ffaa; text-shadow:0 0 12px rgba(0,255,170,.5); }
+.terminal-link { display:block; color:#00d48a; text-decoration:none; transition:color .12s; padding:1px 0; }
+.terminal-link:hover { color:#00ffaa; text-decoration:underline; }
 .officer-line  { display:block; color:#00d48a; padding:1px 0; }
 .highlight     { color:#f9e2af; text-shadow:0 0 8px rgba(249,226,175,.3); }
 .input-line    { color:#e8eeff; }
