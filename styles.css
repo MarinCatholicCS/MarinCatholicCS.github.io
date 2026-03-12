@@ -751,7 +751,7 @@ body {
 #sys-net { cursor: pointer !important; }
 
 #net-dropdown {
-    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    position: absolute; top: calc(100% + 6px); left: 50%;
     transform: translateX(-50%);
     width: 210px;
     background: var(--clr-bg-overlay);
@@ -790,7 +790,7 @@ body {
 #sys-vol { cursor: pointer !important; }
 
 #vol-dropdown {
-    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    position: absolute; top: calc(100% + 6px); left: 50%;
     transform: translateX(-50%);
     width: 190px;
     background: var(--clr-bg-overlay);
@@ -805,7 +805,7 @@ body {
     z-index: 9001;
 }
 #vol-dropdown.visible { display: block; animation: vol-drop-in .14s var(--ease-spring); }
-@keyframes vol-drop-in { from { opacity:0; transform:translateX(-50%) translateY(6px) scale(.97) } to { opacity:1; transform:translateX(-50%) translateY(0) scale(1) } }
+@keyframes vol-drop-in { from { opacity:0; transform:translateX(-50%) translateY(-6px) scale(.97) } to { opacity:1; transform:translateX(-50%) translateY(0) scale(1) } }
 
 .vol-section { margin-bottom: 12px; }
 
@@ -862,3 +862,5 @@ body {
     }
     .cursor { animation: none !important; opacity: 1 !important; }
 }
+
+.ozymandias-text { color: #56c370; white-space: pre-wrap; }

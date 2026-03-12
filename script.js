@@ -58,90 +58,6 @@ const hackathons = [
     { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
 ];
 
-const ozymandias = `I met a traveller from an antique land,
-Who said—"Two vast and trunkless legs of stone
-Stand in the desert. . . . Near them, on the sand,
-Half sunk a shattered visage lies, whose frown,
-And wrinkled lip, and sneer of cold command,
-Tell that its sculptor well those passions read
-Which yet survive, stamped on these lifeless things,
-The hand that mocked them, and the heart that fed;
-And on the pedestal, these words appear:
-My name is Ozymandias, King of Kings;
-Look on my Works, ye Mighty, and despair!"
-Nothing beside remains. Round the decay
-Of that colossal Wreck, boundless and bare
-The lone and level sands stretch far away.`;
-
-const mc_ascii = `
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-%@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%@%%%@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%%%%%
-%@%%%@@                                         @%                                           %%%%%%%
-%@%%%%@                                       @%@%%@                                         %%%%%%%
-%@%%%%@                                      @%%%%%@@                                        %%%%%%%
-%@%%%%@                                    %%%%%%%%%%@%@                                     %%%%%%%
-%@%%%%@                                   @@@@@%%%@%@@%@                                     @%%%%%%
-%@%%%%@                                       @@%%@@                                         @%%%%%%
-%@%%%%@                              @@       @@%%@@       @@                                @%%%%%%
-%@%%%%@                             @@%@      %@%%@@      @%%@@                              @%%%%%%
-%@%%%%@                           @%@%@%@@@@@@@%%%@@@@@@@@@@%@%%                             @%%%%%%
-%@%%%%@                         @%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%@                           @%%%%%%
-%@%%%%@                         @@%%%%%%%%%%%@@@%%@@%%%%%%%%%%%@@@                           @%%%%%%
-%@%%%%@                           @@%%%%      @%%%%%      @@%%%@                             @%%%%%%
-%@%%%%@        %@@@@@@@@@@@@@@@%    @%%@      @@%%@@      @@%%    %@@@@@@@@@@@@@@@@@         @%%%%%%
-%@%%%%@       @%%%%%%%%%%%%%%%%%%@   @@       @@%%@@       @@   @%@%%%%%%%%%%%%%%%%%%@       @%%%%%%
-%@%%%%@       @%%%%%%%%%%%%%%%%%%%%           @@%%@@           %%%%%%%%%%%%%%%%%%%%%%@       @%%%%%%
-%@%%%%@       @%%%%%%%%%%%%%%%%%%%@@      @@@@@@%%@%@@%%      @%%%%%%%%%%%%%%%%%%%%%%@       @%%%%%%
-%@%%%%@       @%%%%%%%%%%%%%%%%%%%%%@      %@@@%%%%%%@%      @%%%%%%%%%%%%%%%%%%%%%%%@       @%%%%%%
-%@%%%%@       @%%%%%%%%%%%%%%%%%%%%%%%@      @@%%%%%@       @@%%%%%%%%%%%%%%%%%%%%%%%@       @%%%%%%
-%@%%%%@       @@%%%%%%%%%%%%%%%%%%%%%%%@       %%%%@       @@%%%%%%%%%%%%%%%%%%%%%%%@        @%%%%%%
-%@%%%%@           %%%%%%%%%%@%%%%%%%%%@%@                 @@%%%%%%%%%%@@%%%%%%%%@@           @%%%%%%
-%@%%%%@           @%%%%%%%%%%@@%%%%%%%%%%@               @@%%%%%%%%%@@%%%%%%%%%%%@           @%%%%%%
-%@%%%%@           @%%%%%%%%%@@ @%%%%%%%%%%@             %%%%%%%%%%%@@@%@%%%%%%%%%@           @%%%%%%
-%@%%%%@           @%%%%%%%%%%@  @%%%%%%%%@@@           @%@%%%%%%%%%@ @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           @%%%%%%%%%%@   %%%%%%%%%%@@         @@@%@@%%%%%@   @%@%%%%%%%%%@           @%%%%%%
-%@%%%%@           @%%%%%%%%%%@    @%%%%%%%%%@@@@@%%%%%%@@@%@@%@%@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           @%%%%%%%%%%@     @%@%%%%%%%@@@@%%%%%%%%%%%%%@@     @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           @%%%%%%%%%%@      @@@%%%%%%%%@@@%%%%%%%%%%%%@@@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @@@%%%%%%%%%@@@%%%%%%%%%%%%@@@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%@@%@%%%%%%%@@@@%%%%%%%%%%@%@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%%@@@%%%%%%%%@@@@@@@@%%%%%@%@    @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%%%@@@@%%%%%%%%@   %@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%%%%%@@%%%%%%%%@%  @@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
-%@%%%%@           %@%%%%%%%%%@     @%%%%@@@%@%%%%%%%@@@@@%%%%%@%@    @%@%%%%%%%%@@           @%%%%%@
-%@%%%%@           %@%%%%%%%%@@     @%%%%%%@@%%%%%%%%%%@@@@@@@@@@@    @%@%%%%%%%%@@           @%%%%%@
-%@%%%%@           %@%%%%%%%%@@     @%%%%%%@@ @%%%%%%%@               @%@%%%%%%%%@@           @%%%%%@
-%@%%%%@           @@%%%%%%%%@%     @%%%%%%@@  @%%%%@@                %@@%%%%%%%%@@           @%%%%%@
-%@%%%@@          @@@%%%%%%%%%%     @%%%%%%@@   @@%@                  @%@%%%%%%%%%@           @%%%%%@
-%@%%%%@       @%@@%@%%%%%%%%@%@%%  @%%%%%%@@    @@                 %@%@%%%%%%%%%@%@@@@      @%%%%%%@
-@@%%%@@       @%%%%%%%%%%%%%%%%%%  @%%%%%%@@                       %@%%%%%%%%%%%%%%%%@      @@%%%%%@
-%%%%%%@@      @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@     @@%%%%@%
-%@@%%%%@@     @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@    @%%%%%@@@
- @@%%%%@@@    @%%%%%%%%%%%%%%%%%%  @@%%%%%@@                       %@%%%%%%%%%%%%%%%%@   @@%%%%%%@
-  %@%%%%%%%   @@@%%%%%%%%%%%%%%%@  @@%%%%%@@            @@@@@@@@   %@@%%%%%%%%%%%%@%@   %@%%%%%%@
-   @%@%%%%%@@                      @@%%%%%@@           @%%%%%%%%@                      %@%%%%%@%@
-    @%%%%%%%%@                     @@%%%%%@@           @@%%%%%@%@                    @@@%%%%@@@
-     @%@%%%%%%@@                   @@%%%%%@@           @@%%%%%@%@                   @%%%%%%@%@
-       @@%%%%%@%%@                 @@%%%%%%@           @%%%%%%@%@                 @%@%%%%%%%
-        @@@%%%%%@@@@               @@%%%%%@@@@@@@@@@@@@@%%%%%%@@@               @@%%%%%%%@@
-          @%@%%%%%%@@@             @%%%%%%%%%%%%%%%%%%%%%%%%%%%%              @%%%%%%%%%@
-            @@@%%%%%%@@@           @@@%%%%%%%%%%%%%%%%%%%%%%%@@%           @@%@%%%%%%%@
-              @%%@%%%%%@@@          @@%@@@@@@@@@@@@@@@@@@@@@%%@          @%%%%%%%%@@@
-                @%%%%%%%%@%@%         @@@@@@@@@@@@@@@@@@@@@%@          @@@@%%%%%%%@
-                  @@%%%%%%%@%%@@                                    @@@%%%%%%%@@@@
-                    @%@%%%%%%%@@@@@                              @%%@%%%%%%%@@@
-                       @@%@%%%%%%%%@@@                        @@%%%%%%%%%@@%@
-                          @%%@%%%%%%%%%@                    %@%%%%%%%%@@@@
-                            @%@%%%%%%%%%%@@%             @@%@%%%%%%%%@@@
-                               @@%@%%%%%%%%%@@@      %@%@%%%%%%%%%@@@
-                                  @@@%%%%%%%%%%%%@@@%%%%%%%%%%%@@@
-                                     @@%@@%%%%%%%%%%%%%%%%@@%@@
-                                         @%@%%%%%%%%%%%%%%%%
-                                           @@%%%%%%%%@%@@
-                                              @@@%%@@@        `;
-
 const helpText = [
     { cmd: "help",       desc: "show this message" },
     { cmd: "whoami",     desc: "existential crisis" },
@@ -777,17 +693,83 @@ function initTerminal(termDiv) {
     cursor.className = 'cursor';
     let currentInputLine = null;
 
+    function restorePrompt() {
+        termDiv.insertBefore(document.createTextNode('$ '), cursor);
+        currentInputLine?.remove();
+        currentInputLine = document.createElement('span');
+        currentInputLine.className = 'input-line';
+        termDiv.insertBefore(currentInputLine, cursor);
+        termDiv.scrollTop = termDiv.scrollHeight;
+    }
+
     // Helper: append a line of text (decrypt it), then call cb
     function decryptAppendLine(text, cb) {
+        const ref = cursor.parentNode === termDiv ? cursor : null;
         if (!text.trim()) {
-            termDiv.appendChild(document.createTextNode(text + '\n'));
+            termDiv.insertBefore(document.createTextNode(text + '\n'), ref);
             cb(); return;
         }
         const span = document.createElement('span');
         span.textContent = text;
-        termDiv.appendChild(span);
-        termDiv.appendChild(document.createTextNode('\n'));
+        termDiv.insertBefore(span, ref);
+        termDiv.insertBefore(document.createTextNode('\n'), ref);
         DecryptEffect.runElParallel(span, cb);
+    }
+
+    // Helper: insert ASCII/braille art line-by-line with scramble animation, then call cb
+    function decryptAppendArt(text, className, cb) {
+        const BRAILLE = '⣿⣾⣽⣻⢿⡿⣟⣯⣷⣧⣦⣤⣄⡇⢸⠿';
+        const pre = document.createElement('pre');
+        pre.className = className;
+        termDiv.insertBefore(pre, cursor);
+
+        const lines = text.replace(/\n$/, '').split('\n');
+        let i = 0;
+
+        function nextLine() {
+            if (i >= lines.length) { if (cb) cb(); return; }
+            const line = lines[i++];
+            const span = document.createElement('span');
+            pre.appendChild(span);
+            pre.appendChild(document.createTextNode('\n'));
+            termDiv.scrollTop = termDiv.scrollHeight;
+
+            const chars = line.split('');
+            const animIdxs = chars.reduce((acc, ch, j) => {
+                if (/\S/.test(ch)) acc.push(j);
+                return acc;
+            }, []);
+
+            if (!animIdxs.length) { span.textContent = line; setTimeout(nextLine, 10); return; }
+
+            function randChar(ch) {
+                return /[\u2800-\u28FF]/.test(ch)
+                    ? BRAILLE[Math.floor(Math.random() * BRAILLE.length)]
+                    : DecryptEffect.CHARS[Math.floor(Math.random() * DecryptEffect.CHARS.length)];
+            }
+
+            const cur = chars.slice();
+            animIdxs.forEach(j => { cur[j] = randChar(chars[j]); });
+            span.textContent = cur.join('');
+
+            const DURATION = 80, TICK = 20;
+            const totalTicks = Math.ceil(DURATION / TICK);
+            let tick = 0;
+            const id = setInterval(() => {
+                tick++;
+                const resolved = Math.floor((tick / totalTicks) * animIdxs.length);
+                for (let k = 0;        k < resolved;        k++) cur[animIdxs[k]] = chars[animIdxs[k]];
+                for (let k = resolved; k < animIdxs.length; k++) cur[animIdxs[k]] = randChar(chars[animIdxs[k]]);
+                span.textContent = cur.join('');
+                if (tick >= totalTicks) {
+                    clearInterval(id);
+                    span.textContent = line;
+                    nextLine();
+                }
+            }, TICK);
+        }
+
+        nextLine();
     }
 
     function typeIntro() {
@@ -802,9 +784,9 @@ function initTerminal(termDiv) {
     function cmd_handler(command) {
         if (command === 'sudo')       return 'sudo these nuts';
         if (command === 'whoami')     return 'who are we at all?';
-        if (command === 'ozymandias') return ozymandias;
+        if (command === 'ozymandias') return { type: 'ozymandias' };
         if (command === 'gavin')      return 'newsom\u{1F940}\u{1F494}';
-        if (command === 'mc')         return { type: 'ascii', text: mc_ascii };
+        if (command === 'mc')         return { type: 'mc' };
         if (command === 'konata')     return { type: 'konata' };
         if (command === 'help')       return { type: 'help' };
         if (command === 'clear')      return { type: 'clear' };
@@ -925,22 +907,38 @@ function initTerminal(termDiv) {
                         termDiv.appendChild(currentInputLine);
                         termDiv.appendChild(cursor);
                         return;
-                    } else if (result?.type === 'ascii') {
-                        const pre = document.createElement('pre'); pre.className = 'ascii-art'; pre.textContent = result.text;
-                        termDiv.insertBefore(pre, cursor);
-                    } else if (result?.type === 'konata') {
-                        const pre = document.createElement('pre'); pre.className = 'konata-art';
-                        pre.textContent = [
-                            '                    /|',
-                            '                   / |   /)/',
-                            '                  /  |  ///',
-                            '    (\\(\\ /\\_____/   | ///   Kona-chan',
-                            '    ( -.-)/ MC-OS  \\__|/    ',
-                            '    o_(")(")               ',
-                            '',
-                            '  Lucky Channel!',
-                        ].join('\n');
-                        termDiv.insertBefore(pre, cursor);
+                    } else if (result?.type === 'mc' || result?.type === 'konata') {
+                        currentInputLine?.remove(); currentInputLine = null;
+                        const file = result.type === 'mc' ? 'mc.txt' : 'konata.txt';
+                        const cls  = result.type === 'mc' ? 'ascii-art' : 'konata-art';
+                        fetch(file).then(r => r.text()).then(text => {
+                            decryptAppendArt(text, cls, restorePrompt);
+                        });
+                        return;
+                    } else if (result?.type === 'ozymandias') {
+                        currentInputLine?.remove(); currentInputLine = null;
+                        fetch('ozymandias.txt').then(r => r.text()).then(text => {
+                            const wrap = document.createElement('div');
+                            wrap.className = 'ozymandias-text';
+                            termDiv.insertBefore(wrap, cursor);
+                            const lines = text.replace(/\n$/, '').split('\n');
+                            let i = 0;
+                            (function nextLine() {
+                                if (i >= lines.length) { restorePrompt(); return; }
+                                const line = lines[i++];
+                                if (!line.trim()) {
+                                    wrap.appendChild(document.createTextNode('\n'));
+                                    setTimeout(nextLine, 0); return;
+                                }
+                                const span = document.createElement('span');
+                                span.textContent = line;
+                                wrap.appendChild(span);
+                                wrap.appendChild(document.createTextNode('\n'));
+                                termDiv.scrollTop = termDiv.scrollHeight;
+                                DecryptEffect.runElParallel(span, nextLine);
+                            })();
+                        });
+                        return;
                     } else if (result?.type === 'help') {
                         termDiv.insertBefore(renderHelp(), cursor);
                     } else if (typeof result === 'string') {
@@ -949,12 +947,7 @@ function initTerminal(termDiv) {
                     }
                 }
 
-                termDiv.insertBefore(document.createTextNode('$ '), cursor);
-                currentInputLine?.remove();
-                currentInputLine = document.createElement('span');
-                currentInputLine.className = 'input-line';
-                termDiv.insertBefore(currentInputLine, cursor);
-                termDiv.scrollTop = termDiv.scrollHeight;
+                restorePrompt();
 
             } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
                 e.preventDefault();
@@ -1415,12 +1408,17 @@ const MusicPlayer = {
             height: '1', width: '1',
             playerVars: {
                 listType: 'playlist', list: this.PLAYLIST_ID,
-                autoplay: 1, controls: 0, playsinline: 1, enablejsapi: 1,
+                autoplay: 0, controls: 0, playsinline: 1, enablejsapi: 1,
             },
             events: {
                 onReady:       e => this._onReady(e),
                 onStateChange: e => this._onStateChange(e),
             },
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (!this._ready) return;
+            if (document.hidden) { this._player?.pauseVideo(); }
+            else if (this._playing) { this._player?.playVideo(); }
         });
     },
 
@@ -1434,8 +1432,11 @@ const MusicPlayer = {
             this._playing = true;
             if (!this._toastShown) {
                 this._toastShown = true;
-                const d = this._player.getVideoData();
-                Toast.showNowPlaying(d.title, d.video_id);
+                // Delay getVideoData so playlist metadata is populated
+                setTimeout(() => {
+                    const d = this._player.getVideoData();
+                    Toast.showNowPlaying(d.title || 'lofi mix', d.video_id);
+                }, 500);
             }
         } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
             this._playing = false;
