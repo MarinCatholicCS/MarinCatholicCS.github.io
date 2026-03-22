@@ -3,7 +3,7 @@
 //  MC-OS  —  desktop simulation
 // ════════════════════════════════════════════════════════
 
-const PANEL_H   = 32;   // top panel height px
+const PANEL_H = 32;   // top panel height px
 const SNAP_EDGE = 8;    // px from screen edge to trigger snap
 
 // Small SVG icons used in titlebars and panel task buttons
@@ -39,35 +39,35 @@ $ hackathons
 `;
 
 const projects = [
-    { name: "getmo",      url: "../getmo/"     },
+    { name: "getmo", url: "../getmo/" },
     { name: "mo-sweeper", url: "../mosweeper/" },
-    { name: "flappymo",   url: "../flappymo/"  },
-    { name: "wildchat",   url: "../chatatmc/"  }
+    { name: "flappymo", url: "../flappymo/" },
+    { name: "wildchat", url: "../chatatmc/" }
 ];
 
 const officers = [
-    { name: "Stanley Ho — Co-President",  url: "https://www.linkedin.com/in/stanley-ho-66748a338/"  },
+    { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338/" },
     { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4/" },
-    { name: "Gavin Perry - First Officer"  },
-    { name: "Alex Willard — Second Officer"},
-    { name: "Mo Adib - Moderator"          },
+    { name: "Gavin Perry - First Officer" },
+    { name: "Alex Willard — Second Officer" },
+    { name: "Mo Adib - Moderator" },
 ];
 
 const hackathons = [
     { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
     { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
-    { name: "LancerHacks 2026 - TerraView - we won 5 tshirts", url:"https://terraview-five.vercel.app/"}
+    { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours a FAANG company", url: "https://terraview-five.vercel.app/" }
 ];
 
 const helpText = [
-    { cmd: "help",       desc: "show this message" },
-    { cmd: "whoami",     desc: "existential crisis" },
-    { cmd: "sudo",       desc: "try it" },
+    { cmd: "help", desc: "show this message" },
+    { cmd: "whoami", desc: "existential crisis" },
+    { cmd: "sudo", desc: "try it" },
     { cmd: "ozymandias", desc: "a poem" },
-    { cmd: "mc",         desc: "ascii art" },
-    { cmd: "konata",     desc: "✴" },
-    { cmd: "clear",      desc: "clear the terminal" },
-    { cmd: "1-4",        desc: "open a project" },
+    { cmd: "mc", desc: "ascii art" },
+    { cmd: "konata", desc: "✴" },
+    { cmd: "clear", desc: "clear the terminal" },
+    { cmd: "1-4", desc: "open a project" },
 ];
 
 // ════════════════════════════════════════════════════════
@@ -76,17 +76,17 @@ const helpText = [
 
 const SnapPreview = {
     el: null, current: null,
-    init()       { this.el = document.getElementById('snap-preview'); },
+    init() { this.el = document.getElementById('snap-preview'); },
     show(zone) {
         if (!zone || !this.el) { this.hide(); return; }
         if (zone === this.current) return;
         this.current = zone;
         const deskH = window.innerHeight - PANEL_H;
-        const half  = Math.floor(window.innerWidth / 2);
+        const half = Math.floor(window.innerWidth / 2);
         const rects = {
-            left:     { l: 0,    t: PANEL_H, w: half,                    h: deskH },
-            right:    { l: half, t: PANEL_H, w: window.innerWidth - half, h: deskH },
-            maximize: { l: 0,    t: PANEL_H, w: window.innerWidth,        h: deskH },
+            left: { l: 0, t: PANEL_H, w: half, h: deskH },
+            right: { l: half, t: PANEL_H, w: window.innerWidth - half, h: deskH },
+            maximize: { l: 0, t: PANEL_H, w: window.innerWidth, h: deskH },
         };
         const r = rects[zone]; if (!r) return;
         this.el.style.cssText = `left:${r.l}px;top:${r.t}px;width:${r.w}px;height:${r.h}px;`;
@@ -100,7 +100,7 @@ const SnapPreview = {
 // ════════════════════════════════════════════════════════
 
 const WindowManager = {
-    windows:  {},
+    windows: {},
     zCounter: 100,
 
     create({ id, title, width, height, x, y, buildContent, scanlines = true }) {
@@ -131,7 +131,7 @@ const WindowManager = {
         document.getElementById('desktop').appendChild(win);
         buildContent(win.querySelector('.window-content'));
 
-        win.querySelector('.btn-close').onclick    = e => { e.stopPropagation(); this.close(id); };
+        win.querySelector('.btn-close').onclick = e => { e.stopPropagation(); this.close(id); };
         win.querySelector('.btn-minimize').onclick = e => { e.stopPropagation(); this.minimize(id); };
         win.querySelector('.btn-maximize').onclick = e => { e.stopPropagation(); this.toggleMaximize(id); };
         win.addEventListener('mousedown', () => this.focus(id));
@@ -237,10 +237,10 @@ const WindowManager = {
             w.prevRect = { left: el.style.left, top: el.style.top, width: el.style.width, height: el.style.height };
         }
         const deskH = window.innerHeight - PANEL_H;
-        const half  = Math.floor(window.innerWidth / 2);
+        const half = Math.floor(window.innerWidth / 2);
         const rects = {
-            left:     `left:0;top:${PANEL_H}px;width:${half}px;height:${deskH}px;border-radius:0;`,
-            right:    `left:${half}px;top:${PANEL_H}px;width:${window.innerWidth - half}px;height:${deskH}px;border-radius:0;`,
+            left: `left:0;top:${PANEL_H}px;width:${half}px;height:${deskH}px;border-radius:0;`,
+            right: `left:${half}px;top:${PANEL_H}px;width:${window.innerWidth - half}px;height:${deskH}px;border-radius:0;`,
             maximize: `left:0;top:${PANEL_H}px;width:${window.innerWidth}px;height:${deskH}px;border-radius:0;`,
         };
         if (rects[zone]) {
@@ -261,9 +261,9 @@ const WindowManager = {
             if (e.target.closest('.ptbtn-close')) return;
             const w = this.windows[id];
             if (!w) return;
-            if (w.minimized)                                    { this.restore(id); }
+            if (w.minimized) { this.restore(id); }
             else if (w.el.classList.contains('window-focused')) { this.minimize(id); }
-            else                                                { this.focus(id); }
+            else { this.focus(id); }
         });
 
         btn.querySelector('.ptbtn-close').addEventListener('click', e => {
@@ -279,48 +279,48 @@ const WindowManager = {
             if (e.target.closest('.title-buttons')) return;
             e.preventDefault();
 
-            const winId  = win.id.replace('win-', '');
+            const winId = win.id.replace('win-', '');
             const wState = this.windows[winId];
 
             // Un-snap / un-maximize on drag: restore prev size and reposition under cursor
             if (wState && (wState.snapped || wState.maximized) && wState.prevRect) {
-                const prevW = parseInt(wState.prevRect.width)  || 800;
+                const prevW = parseInt(wState.prevRect.width) || 800;
                 const prevH = parseInt(wState.prevRect.height) || 500;
-                win.style.left         = Math.max(0, Math.min(window.innerWidth - prevW, e.clientX - prevW / 2)) + 'px';
-                win.style.top          = Math.max(PANEL_H, e.clientY - 17) + 'px';
-                win.style.width        = prevW + 'px';
-                win.style.height       = prevH + 'px';
+                win.style.left = Math.max(0, Math.min(window.innerWidth - prevW, e.clientX - prevW / 2)) + 'px';
+                win.style.top = Math.max(PANEL_H, e.clientY - 17) + 'px';
+                win.style.width = prevW + 'px';
+                win.style.height = prevH + 'px';
                 win.style.borderRadius = '';
                 wState.snapped = null; wState.maximized = false; wState.prevRect = null;
             }
 
             const startX = e.clientX, startY = e.clientY;
             const startL = parseInt(win.style.left) || 0;
-            const startT = parseInt(win.style.top)  || 0;
-            let   snapZone = null;
+            const startT = parseInt(win.style.top) || 0;
+            let snapZone = null;
 
             const onMove = e => {
                 win.style.left = (startL + e.clientX - startX) + 'px';
-                win.style.top  = Math.max(PANEL_H, startT + e.clientY - startY) + 'px';
+                win.style.top = Math.max(PANEL_H, startT + e.clientY - startY) + 'px';
 
                 const prev = snapZone;
-                if      (e.clientX <= SNAP_EDGE)                       snapZone = 'left';
-                else if (e.clientX >= window.innerWidth  - SNAP_EDGE)  snapZone = 'right';
-                else if (e.clientY <= PANEL_H + SNAP_EDGE)             snapZone = 'maximize';
-                else                                                    snapZone = null;
+                if (e.clientX <= SNAP_EDGE) snapZone = 'left';
+                else if (e.clientX >= window.innerWidth - SNAP_EDGE) snapZone = 'right';
+                else if (e.clientY <= PANEL_H + SNAP_EDGE) snapZone = 'maximize';
+                else snapZone = null;
                 if (snapZone !== prev) SnapPreview.show(snapZone);
             };
 
             const onUp = () => {
                 document.removeEventListener('mousemove', onMove);
-                document.removeEventListener('mouseup',   onUp);
+                document.removeEventListener('mouseup', onUp);
                 SnapPreview.hide();
                 if (snapZone) this._applySnap(winId, snapZone);
                 snapZone = null;
             };
 
             document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup',   onUp);
+            document.addEventListener('mouseup', onUp);
         });
     },
 
@@ -330,15 +330,15 @@ const WindowManager = {
             const startX = e.clientX, startY = e.clientY;
             const startW = win.offsetWidth, startH = win.offsetHeight;
             const onMove = e => {
-                win.style.width  = Math.max(320, startW + e.clientX - startX) + 'px';
+                win.style.width = Math.max(320, startW + e.clientX - startX) + 'px';
                 win.style.height = Math.max(200, startH + e.clientY - startY) + 'px';
             };
             const onUp = () => {
                 document.removeEventListener('mousemove', onMove);
-                document.removeEventListener('mouseup',   onUp);
+                document.removeEventListener('mouseup', onUp);
             };
             document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup',   onUp);
+            document.addEventListener('mouseup', onUp);
         });
     },
 };
@@ -353,21 +353,21 @@ const AppRegistry = {
             title: 'mc@cs-club: ~',
             w: dW => Math.min(860, dW - 40),
             h: dH => Math.min(560, dH - 40),
-            build:     buildTerminalContent,
+            build: buildTerminalContent,
             scanlines: true,
         },
         projects: {
             title: 'Projects',
-            w: ()  => 520,
-            h: ()  => 400,
-            build:     buildProjectsContent,
+            w: () => 520,
+            h: () => 400,
+            build: buildProjectsContent,
             scanlines: false,
         },
         about: {
             title: 'About MC-OS',
-            w: ()  => 380,
-            h: ()  => 280,
-            build:     buildAboutContent,
+            w: () => 380,
+            h: () => 280,
+            build: buildAboutContent,
             scanlines: false,
         },
     },
@@ -390,17 +390,17 @@ const AppRegistry = {
         }
 
         const dW = window.innerWidth, dH = window.innerHeight - PANEL_H;
-        const w  = app.w(dW), h = app.h(dH);
+        const w = app.w(dW), h = app.h(dH);
         const stagger = id === 'projects' ? 28 : id === 'about' ? 14 : 0;
         const saved = this._savedPositions[id];
         WindowManager.create({
             id, title: app.title,
-            width:  saved?.w ?? w,
+            width: saved?.w ?? w,
             height: saved?.h ?? h,
             x: saved?.x ?? opts.x ?? Math.max(0, Math.floor((dW - w) / 2) + stagger),
             y: saved?.y ?? opts.y ?? PANEL_H + Math.max(0, Math.floor((dH - h) / 2) - 16) + stagger,
             buildContent: app.build,
-            scanlines:    app.scanlines,
+            scanlines: app.scanlines,
         });
     },
 
@@ -458,7 +458,7 @@ const IconSystem = {
 
             const startX = e.clientX, startY = e.clientY;
             const startL = parseInt(el.style.left) || 0;
-            const startT = parseInt(el.style.top)  || 0;
+            const startT = parseInt(el.style.top) || 0;
             dragStarted = false;
 
             const onMove = e => {
@@ -469,18 +469,18 @@ const IconSystem = {
                 }
                 if (dragStarted) {
                     el.style.left = Math.max(0, Math.min(window.innerWidth - 76, startL + dx)) + 'px';
-                    el.style.top  = Math.max(PANEL_H + 4, Math.min(window.innerHeight - 108, startT + dy)) + 'px';
+                    el.style.top = Math.max(PANEL_H + 4, Math.min(window.innerHeight - 108, startT + dy)) + 'px';
                 }
             };
             const onUp = () => {
                 document.removeEventListener('mousemove', onMove);
-                document.removeEventListener('mouseup',   onUp);
+                document.removeEventListener('mouseup', onUp);
                 el.classList.remove('dragging');
                 if (!dragStarted && appId) AppRegistry.launch(appId);
                 dragStarted = false;
             };
             document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup',   onUp);
+            document.addEventListener('mouseup', onUp);
         });
 
     },
@@ -549,13 +549,13 @@ const ContextMenu = {
     show(x, y) {
         this._activeIndex = -1;
         this.el.style.left = x + 'px';
-        this.el.style.top  = y + 'px';
+        this.el.style.top = y + 'px';
         this.el.classList.add('visible');
         requestAnimationFrame(() => {
             if (!this.el.classList.contains('visible')) return;
             const r = this.el.getBoundingClientRect();
-            if (r.right  > window.innerWidth)  this.el.style.left = (x - r.width)  + 'px';
-            if (r.bottom > window.innerHeight) this.el.style.top  = (y - r.height) + 'px';
+            if (r.right > window.innerWidth) this.el.style.left = (x - r.width) + 'px';
+            if (r.bottom > window.innerHeight) this.el.style.top = (y - r.height) + 'px';
         });
     },
 
@@ -579,8 +579,8 @@ const ContextMenu = {
         switch (action) {
             case 'open-terminal': AppRegistry.launch('terminal'); break;
             case 'open-projects': AppRegistry.launch('projects'); break;
-            case 'refresh':       IconSystem.deselectAll();        break;
-            case 'about':         AppRegistry.launch('about');     break;
+            case 'refresh': IconSystem.deselectAll(); break;
+            case 'about': AppRegistry.launch('about'); break;
         }
     },
 };
@@ -602,13 +602,13 @@ const WallpaperCanvas = {
         window.addEventListener('resize', () => this._resize());
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) { cancelAnimationFrame(this.animId); }
-            else                 { this._animate(0); }
+            else { this._animate(0); }
         });
         this._animate(0);
     },
 
     _resize() {
-        this.canvas.width  = window.innerWidth;
+        this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         const cols = Math.floor(this.canvas.width / this.COL_W);
         this.drops = Array.from({ length: cols }, () => -Math.floor(Math.random() * 80));
@@ -633,12 +633,12 @@ const WallpaperCanvas = {
             if (y < 0) { drops[i]++; continue; }
 
             const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
-            const x  = i * COL_W;
+            const x = i * COL_W;
 
             // Head character: bright green
             ctx.fillStyle = '#00ff41';
             ctx.shadowColor = '#00ff41';
-            ctx.shadowBlur  = 8;
+            ctx.shadowBlur = 8;
             ctx.fillText(ch, x, y * COL_W);
 
             // Second character: slightly dimmer
@@ -759,7 +759,7 @@ function initTerminal(termDiv) {
             const id = setInterval(() => {
                 tick++;
                 const resolved = Math.floor((tick / totalTicks) * animIdxs.length);
-                for (let k = 0;        k < resolved;        k++) cur[animIdxs[k]] = chars[animIdxs[k]];
+                for (let k = 0; k < resolved; k++) cur[animIdxs[k]] = chars[animIdxs[k]];
                 for (let k = resolved; k < animIdxs.length; k++) cur[animIdxs[k]] = randChar(chars[animIdxs[k]]);
                 span.textContent = cur.join('');
                 if (tick >= totalTicks) {
@@ -783,14 +783,14 @@ function initTerminal(termDiv) {
     }
 
     function cmd_handler(command) {
-        if (command === 'sudo')       return 'sudo these nuts';
-        if (command === 'whoami')     return 'who are we at all?';
+        if (command === 'sudo') return 'sudo these nuts';
+        if (command === 'whoami') return 'who are we at all?';
         if (command === 'ozymandias') return { type: 'ozymandias' };
-        if (command === 'gavin')      return 'newsom\u{1F940}\u{1F494}';
-        if (command === 'mc')         return { type: 'mc' };
-        if (command === 'konata')     return { type: 'konata' };
-        if (command === 'help')       return { type: 'help' };
-        if (command === 'clear')      return { type: 'clear' };
+        if (command === 'gavin') return 'newsom\u{1F940}\u{1F494}';
+        if (command === 'mc') return { type: 'mc' };
+        if (command === 'konata') return { type: 'konata' };
+        if (command === 'help') return { type: 'help' };
+        if (command === 'clear') return { type: 'clear' };
         const n = parseInt(command);
         if (n >= 1 && n <= projects.length) { window.location.replace(projects[n - 1].url); return; }
         return `${command}: command not found`;
@@ -801,7 +801,7 @@ function initTerminal(termDiv) {
         helpText.forEach(h => {
             const line = document.createElement('div');
             const c = document.createElement('span'); c.textContent = `  ${h.cmd.padEnd(14)}`; c.className = 'help-cmd';
-            const d = document.createElement('span'); d.textContent = h.desc;                  d.className = 'help-text';
+            const d = document.createElement('span'); d.textContent = h.desc; d.className = 'help-text';
             line.appendChild(c); line.appendChild(d); frag.appendChild(line);
         });
         return frag;
@@ -911,7 +911,7 @@ function initTerminal(termDiv) {
                     } else if (result?.type === 'mc' || result?.type === 'konata') {
                         currentInputLine?.remove(); currentInputLine = null;
                         const file = result.type === 'mc' ? 'mc.txt' : 'konata.txt';
-                        const cls  = result.type === 'mc' ? 'ascii-art' : 'konata-art';
+                        const cls = result.type === 'mc' ? 'ascii-art' : 'konata-art';
                         fetch(file).then(r => r.text()).then(text => {
                             decryptAppendArt(text, cls, restorePrompt);
                         });
@@ -965,11 +965,11 @@ function initTerminal(termDiv) {
 // ════════════════════════════════════════════════════════
 
 const PROJECT_FILES = [
-    { name: 'getmo',      url: 'https://marincatholiccs.github.io/getmo/' },
+    { name: 'getmo', url: 'https://marincatholiccs.github.io/getmo/' },
     { name: 'mo-sweeper', url: 'https://marincatholiccs.github.io/mosweeper/' },
-    { name: 'flappymo',   url: 'https://marincatholiccs.github.io/flappymo/' },
-    { name: 'wildchat',   url: 'https://marincatholiccs.github.io/chatatmc/' },
-    { name: 'voluntir',   url: '../voluntir/' },
+    { name: 'flappymo', url: 'https://marincatholiccs.github.io/flappymo/' },
+    { name: 'wildchat', url: 'https://marincatholiccs.github.io/chatatmc/' },
+    { name: 'voluntir', url: '../voluntir/' },
 ];
 
 function buildProjectsContent(container) {
@@ -1088,19 +1088,19 @@ const CommandPalette = {
     _active: -1, _filtered: [], _open: false,
 
     _commands: [
-        { id: 'launch-terminal', label: 'Open Terminal',   icon: 'terminal', shortcut: 'Ctrl+Alt+T', action: () => AppRegistry.launch('terminal') },
-        { id: 'launch-projects', label: 'Open Projects',   icon: 'projects', shortcut: '',           action: () => AppRegistry.launch('projects') },
-        { id: 'launch-about',    label: 'About MC-OS',     icon: 'about',    shortcut: '',           action: () => AppRegistry.launch('about')    },
-        { id: 'refresh',         label: 'Refresh Desktop', icon: '',         shortcut: 'F5',         action: () => IconSystem.deselectAll()        },
+        { id: 'launch-terminal', label: 'Open Terminal', icon: 'terminal', shortcut: 'Ctrl+Alt+T', action: () => AppRegistry.launch('terminal') },
+        { id: 'launch-projects', label: 'Open Projects', icon: 'projects', shortcut: '', action: () => AppRegistry.launch('projects') },
+        { id: 'launch-about', label: 'About MC-OS', icon: 'about', shortcut: '', action: () => AppRegistry.launch('about') },
+        { id: 'refresh', label: 'Refresh Desktop', icon: '', shortcut: 'F5', action: () => IconSystem.deselectAll() },
     ],
 
     init() {
-        this.el      = document.getElementById('cmd-palette-overlay');
+        this.el = document.getElementById('cmd-palette-overlay');
         this.inputEl = document.getElementById('cmd-palette-input');
-        this.listEl  = document.getElementById('cmd-palette-list');
+        this.listEl = document.getElementById('cmd-palette-list');
         if (!this.el) return;
-        this.inputEl.addEventListener('input',   () => this._render());
-        this.inputEl.addEventListener('keydown', e  => this._onKey(e));
+        this.inputEl.addEventListener('input', () => this._render());
+        this.inputEl.addEventListener('keydown', e => this._onKey(e));
         this.el.addEventListener('mousedown', e => { if (e.target === this.el) this.hide(); });
         this._render();
     },
@@ -1147,7 +1147,7 @@ const CommandPalette = {
     },
 
     _esc(str) {
-        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     },
 
     _render() {
@@ -1172,7 +1172,7 @@ const CommandPalette = {
 
         this.listEl.querySelectorAll('.cp-item').forEach(el => {
             el.addEventListener('mouseenter', () => { this._active = +el.dataset.index; this._updateActive(); });
-            el.addEventListener('click',      () => { this._active = +el.dataset.index; this._execute(); });
+            el.addEventListener('click', () => { this._active = +el.dataset.index; this._execute(); });
         });
     },
 
@@ -1184,10 +1184,10 @@ const CommandPalette = {
     },
 
     _onKey(e) {
-        if (e.key === 'Escape')    { e.preventDefault(); this.hide();       return; }
-        if (e.key === 'ArrowDown') { e.preventDefault(); this._move(1);     return; }
-        if (e.key === 'ArrowUp')   { e.preventDefault(); this._move(-1);    return; }
-        if (e.key === 'Enter')     { e.preventDefault(); this._execute();   return; }
+        if (e.key === 'Escape') { e.preventDefault(); this.hide(); return; }
+        if (e.key === 'ArrowDown') { e.preventDefault(); this._move(1); return; }
+        if (e.key === 'ArrowUp') { e.preventDefault(); this._move(-1); return; }
+        if (e.key === 'Enter') { e.preventDefault(); this._execute(); return; }
     },
 
     _move(dir) {
@@ -1260,7 +1260,7 @@ const Toast = {
     },
 
     _esc(str) {
-        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     },
 };
 
@@ -1370,8 +1370,8 @@ const DecryptEffect = {
         const id = setInterval(() => {
             tick++;
             const resolved = Math.floor((tick / totalTicks) * alpha.length);
-            for (let i = 0;        i < resolved;      i++) cur[alpha[i]] = chars[alpha[i]];
-            for (let i = resolved; i < alpha.length;  i++) cur[alpha[i]] = this._rand();
+            for (let i = 0; i < resolved; i++) cur[alpha[i]] = chars[alpha[i]];
+            for (let i = resolved; i < alpha.length; i++) cur[alpha[i]] = this._rand();
             span.textContent = cur.join('');
             if (tick >= totalTicks) {
                 clearInterval(id);
@@ -1387,9 +1387,9 @@ const DecryptEffect = {
 // ════════════════════════════════════════════════════════
 
 const MusicPlayer = {
-    _player:     null,
-    _ready:      false,
-    _playing:    false,
+    _player: null,
+    _ready: false,
+    _playing: false,
     _toastShown: false,
     PLAYLIST_ID: 'PL6NdkXsPL07KN01gH2vucrHCEyyNmVEx4',
 
@@ -1413,7 +1413,7 @@ const MusicPlayer = {
                 autoplay: 0, controls: 0, playsinline: 1, enablejsapi: 1,
             },
             events: {
-                onReady:       e => this._onReady(e),
+                onReady: e => this._onReady(e),
                 onStateChange: e => this._onStateChange(e),
             },
         });
@@ -1446,13 +1446,13 @@ const MusicPlayer = {
         VolumeDropdown._updatePlayBtn();
     },
 
-    play()       { this._player?.playVideo(); },
-    pause()      { this._player?.pauseVideo(); },
-    toggle()     { this._playing ? this.pause() : this.play(); },
-    next()       { this._player?.nextVideo(); },
-    prev()       { this._player?.previousVideo(); },
+    play() { this._player?.playVideo(); },
+    pause() { this._player?.pauseVideo(); },
+    toggle() { this._playing ? this.pause() : this.play(); },
+    next() { this._player?.nextVideo(); },
+    prev() { this._player?.previousVideo(); },
     setVolume(v) { this._player?.setVolume(v); },
-    isPlaying()  { return this._playing; },
+    isPlaying() { return this._playing; },
 };
 
 // ════════════════════════════════════════════════════════
@@ -1464,7 +1464,7 @@ const NetworkDropdown = {
 
     init() {
         const btn = document.getElementById('sys-net');
-        this._el  = document.getElementById('net-dropdown');
+        this._el = document.getElementById('net-dropdown');
         if (!btn || !this._el) return;
         btn.addEventListener('click', e => { e.stopPropagation(); this.toggle(); });
         document.addEventListener('click', e => {
@@ -1473,8 +1473,8 @@ const NetworkDropdown = {
     },
 
     toggle() { this._open ? this.hide() : this.show(); },
-    show()   { VolumeDropdown.hide(); this._open = true;  this._el.classList.add('visible'); },
-    hide()   { this._open = false; this._el?.classList.remove('visible'); },
+    show() { VolumeDropdown.hide(); this._open = true; this._el.classList.add('visible'); },
+    hide() { this._open = false; this._el?.classList.remove('visible'); },
 };
 
 // ════════════════════════════════════════════════════════
@@ -1486,9 +1486,9 @@ const VolumeDropdown = {
     _el: null, _slider: null, _playBtn: null,
 
     init() {
-        const btn     = document.getElementById('sys-vol');
-        this._el      = document.getElementById('vol-dropdown');
-        this._slider  = document.getElementById('vol-slider');
+        const btn = document.getElementById('sys-vol');
+        this._el = document.getElementById('vol-dropdown');
+        this._slider = document.getElementById('vol-slider');
         this._playBtn = document.getElementById('vol-play-btn');
         if (!btn || !this._el) return;
 
