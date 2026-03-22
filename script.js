@@ -56,6 +56,7 @@ const officers = [
 const hackathons = [
     { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
     { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
+    { name: "LancerHacks 2026 - TerraView - we won 5 tshirts", url:"https://terraview-five.vercel.app/"}
 ];
 
 const helpText = [
