@@ -4,22 +4,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development
 
-This is a static site — no build step, no package manager, no dependencies.
+This is a React + Vite project using JavaScript (JSX).
 
-**Local development:** Open with VS Code Live Server on port 5501 (configured in `.vscode/settings.json`), or any static file server.
+**Install dependencies:** `npm install`
 
-**Deployment:** Push to the `main` branch; GitHub Pages auto-deploys.
+**Local development:** `npm run dev` — starts Vite dev server with HMR.
+
+**Build:** `npm run build` — outputs to `dist/`.
+
+**Deployment:** Push to the `main` branch; GitHub Pages auto-deploys. May need a GitHub Actions workflow for Vite build output.
 
 ## Architecture
 
-Single-page static website for the Marin Catholic Computer Science Club, styled as an interactive retro CRT terminal.
+Single-page React app for the Marin Catholic Computer Science Club, styled as an interactive desktop OS simulation (MC-OS).
 
-- **[index.html](index.html)** — Minimal HTML shell. Just a `#terminal-window` div; all content is injected by JS.
-- **[script.js](script.js)** — All application logic. On load it runs a typing animation, then sequentially displays hackathons, projects, and officers. Also handles a command prompt (user can type commands like `help`, `clear`, `whoami`, `mc`, `sudo`, `ozymandias`).
-- **[styles.css](styles.css)** — Retro terminal aesthetic: green-on-black (`#00ff41` on `#0a0a12`), scanline overlay, blinking cursor, gold (`#ffd700`) for award highlights.
+- **`src/App.jsx`** — Main app component. Manages window lifecycle, app launching, keyboard shortcuts, boot sequence.
+- **`src/components/`** — React components: Panel, Window, DesktopIcons, ContextMenu, CommandPalette, SnapPreview, WallpaperCanvas, Toast.
+- **`src/apps/`** — Imperative DOM builders for app window contents: buildTerminal, buildProjects, buildAbout, buildBrowser. These use direct DOM manipulation for complex animations.
+- **`src/hooks/`** — Custom hooks: useWindowManager (window state), useDecryptEffect (scramble→reveal text animation).
+- **`src/data/constants.js`** — All club data (projects, hackathons, officers) and app icon SVGs.
+- **`src/utils/musicPlayer.js`** — YouTube IFrame API wrapper for background music.
+- **`src/styles.css`** — All styles. Retro hacker terminal aesthetic: green-on-black, scanlines, CRT effects.
 
 ## Data
 
-All club data (projects, hackathons, officers) is hardcoded as JS objects in [script.js](script.js). To update club info, edit those objects directly — no external config or CMS.
+All club data (projects, hackathons, officers) is in `src/data/constants.js`. To update club info, edit those objects directly.
 
 Project links are relative paths assuming sibling repos are deployed alongside this one (e.g., `../getmo/`, `../mosweeper/`).
