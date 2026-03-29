@@ -57,6 +57,7 @@ const hackathons = [
     { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
     { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
     { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/", highlight: true}
+    { name: "VikingHacks 2026 - Flipus - ...", url: "https://flipus.vercel.app/"}
 ];
 
 const helpText = [
