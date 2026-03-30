@@ -15,9 +15,15 @@ export default function WallpaperCanvas() {
     let last = 0;
 
     function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const cols = Math.floor(canvas.width / COL_W);
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const cols = Math.floor(w / COL_W);
       drops = Array.from({ length: cols }, () => -Math.floor(Math.random() * 80));
     }
 
@@ -26,7 +32,7 @@ export default function WallpaperCanvas() {
       if (ts - last < 42) return;
       last = ts;
 
-      const W = canvas.width, H = canvas.height;
+      const W = window.innerWidth, H = window.innerHeight;
       // RETRO RETHEME — blue tinted rain effect
       ctx.fillStyle = 'rgba(58,110,165,0.06)';
       ctx.fillRect(0, 0, W, H);

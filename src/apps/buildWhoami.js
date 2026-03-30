@@ -13,12 +13,7 @@ export function buildWhoamiContent(container) {
   container.innerHTML = `
     <div class="whoami-header">
       <div class="whoami-logo">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <rect x="1" y="1" width="20" height="20" rx="3" fill="#F25022"/>
-          <rect x="27" y="1" width="20" height="20" rx="3" fill="#7FBA00"/>
-          <rect x="1" y="27" width="20" height="20" rx="3" fill="#00A4EF"/>
-          <rect x="27" y="27" width="20" height="20" rx="3" fill="#FFB900"/>
-        </svg>
+        <img src="/images/mc.png" alt="MC" width="48" height="48" style="object-fit:contain;" />
       </div>
       <div class="whoami-title-area">
         <div class="whoami-name">Marin Catholic Computer Science Club</div>

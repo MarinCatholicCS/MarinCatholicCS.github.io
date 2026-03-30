@@ -23,12 +23,7 @@ export function buildProjectsContent(container) {
     item.className = 'file-item';
     item.innerHTML = `
       <div class="file-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-<!-- RETRO RETHEME — blue file icons -->
-          <rect x="2" y="6" width="20" height="14" rx="2" stroke="#2989D8" stroke-width="1.5" fill="rgba(41,137,216,.07)"/>
-          <path d="M2 9h20" stroke="#2989D8" stroke-width="1" opacity=".4"/>
-          <path d="M7 13h10M7 16h6" stroke="#2989D8" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
-        </svg>
+        <img src="${f.favicon}" alt="" width="24" height="24" style="object-fit:contain;" onerror="this.src='/images/mc.png'" />
       </div>
       <div class="file-name">${f.name}</div>`;
 

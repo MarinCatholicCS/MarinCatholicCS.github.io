@@ -51,24 +51,32 @@ $ hackathons
 `;
 
 export const projects = [
-  { name: "getmo", url: "../getmo/" },
-  { name: "mo-sweeper", url: "../mosweeper/" },
-  { name: "flappymo", url: "../flappymo/" },
-  { name: "wildchat", url: "../chatatmc/" },
+  { name: "getmo", url: "https://marincatholiccs.github.io/getmo/", favicon: "https://marincatholiccs.github.io/getmo/favicon.ico" },
+  { name: "mo-sweeper", url: "https://marincatholiccs.github.io/mosweeper/", favicon: "https://marincatholiccs.github.io/mosweeper/favicon.ico" },
+  { name: "flappymo", url: "https://marincatholiccs.github.io/flappymo/", favicon: "https://marincatholiccs.github.io/flappymo/favicon.ico" },
+  { name: "wildchat", url: "https://marincatholiccs.github.io/chatatmc/", favicon: "https://marincatholiccs.github.io/chatatmc/favicon.ico" },
 ];
+
+// Derive photo path from name: "Nico Zametto" → "/images/nicozametto.jpg"
+// Officers just need to add their photo to public/images/ as firstname+lastname lowercase .jpg
+export function getOfficerPhoto(name) {
+  const first = name.split('—')[0].trim();
+  return '/images/' + first.replace(/\s+/g, '').toLowerCase() + '.jpg';
+}
 
 export const officers = [
   { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338/" },
   { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4/" },
-  { name: "Gavin Perry - First Officer" },
+  { name: "Gavin Perry — First Officer" },
   { name: "Alex Willard — Second Officer" },
-  { name: "Mo Adib - Moderator" },
+  { name: "Mo Adib — Moderator" },
 ];
 
 export const hackathons = [
   { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
   { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
   { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/", highlight: true },
+  { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
 ];
 
 export const helpText = [
@@ -83,9 +91,9 @@ export const helpText = [
 ];
 
 export const PROJECT_FILES = [
-  { name: 'getmo', url: 'https://marincatholiccs.github.io/getmo/' },
-  { name: 'mo-sweeper', url: 'https://marincatholiccs.github.io/mosweeper/' },
-  { name: 'flappymo', url: 'https://marincatholiccs.github.io/flappymo/' },
-  { name: 'wildchat', url: 'https://marincatholiccs.github.io/chatatmc/' },
-  { name: 'voluntir', url: '../voluntir/' },
+  { name: 'getmo', url: 'https://marincatholiccs.github.io/getmo/', favicon: 'https://marincatholiccs.github.io/getmo/favicon.ico' },
+  { name: 'mo-sweeper', url: 'https://marincatholiccs.github.io/mosweeper/', favicon: 'https://marincatholiccs.github.io/mosweeper/favicon.ico' },
+  { name: 'flappymo', url: 'https://marincatholiccs.github.io/flappymo/', favicon: 'https://marincatholiccs.github.io/flappymo/favicon.ico' },
+  { name: 'wildchat', url: 'https://marincatholiccs.github.io/chatatmc/', favicon: 'https://marincatholiccs.github.io/chatatmc/favicon.ico' },
+  { name: 'voluntir', url: '../voluntir/', favicon: 'https://marincatholiccs.github.io/voluntir/favicon.ico' },
 ];

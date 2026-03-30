@@ -57,7 +57,7 @@
 /* RETRO RETHEME — font swap from Fira Code to Segoe UI */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: 'Segoe UI', Tahoma, 'Trebuchet MS', Arial, sans-serif;
+    font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif;
     overflow: hidden; width: 100vw; height: 100vh;
     background: #3A6EA5;
 }
@@ -69,7 +69,7 @@ body {
 #desktop {
     position: fixed; inset: 0;
     background-color: #3A6EA5;
-    background-image: url('/images/bliss.jpg');
+    background-image: url('/images/bliss.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -77,179 +77,99 @@ body {
 }
 @keyframes desktop-fadein { from { opacity:0 } to { opacity:1 } }
 
-#desktop-canvas {
-    display: none;
-}
 
 /* ══════════════════════════════════════════
    Top System Panel — Windows 7 Taskbar
 ══════════════════════════════════════════ */
 /* RETRO RETHEME — Windows XP Luna taskbar */
+/* ── Windows 7 Superbar ── */
 #panel {
-    position: absolute; bottom: 0; left: 0; right: 0; top: auto;
-    height: 40px;
-    background: linear-gradient(180deg, #3168D5 0%, #4E8AE6 8%, #2F61CE 20%, #2B5BC7 50%, #2456C0 80%, #1941A5 100%);
-    border-top: 2px solid #5A9EF0;
-    box-shadow:
-        0 -1px 0 rgba(0,0,0,.4),
-        inset 0 1px 0 rgba(255,255,255,.2),
-        inset 0 -1px 0 rgba(0,0,0,.15);
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 48px;
+    background: linear-gradient(180deg,
+        rgba(60, 100, 170, .45) 0%,
+        rgba(30, 60, 120, .5) 40%,
+        rgba(20, 45, 100, .55) 100%);
+    backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid rgba(150, 200, 255, .3);
     display: flex; align-items: center;
+    padding: 0 4px;
     z-index: 900;
     user-select: none; -webkit-user-select: none;
-    overflow: visible;
+    box-shadow: 0 -1px 4px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.08);
 }
-/* RETRO RETHEME — XP taskbar top reflection line */
 #panel::after {
     content: '';
     position: absolute; top: 0; left: 0; right: 0;
-    height: 1px;
-    background: rgba(255,255,255,.2);
+    height: 50%;
+    background: linear-gradient(180deg, rgba(150, 190, 255, .12) 0%, transparent 100%);
     pointer-events: none;
 }
-#panel > * { position: relative; z-index: 1; }
 
-/* Left */
-#panel-left { display: flex; align-items: center; gap: 7px; padding: 0 8px 0 12px; flex-shrink: 0; }
-#panel-logo { display: flex; align-items: center; }
-
-/* RETRO RETHEME — XP Start button (classic green pill shape) */
-#panel-brand {
-    background: linear-gradient(180deg, #6ABF4B 0%, #4DB038 15%, #3EA832 50%, #328E28 85%, #276E1E 100%);
-    border: 1px solid #1B5E14;
-    border-right: 1px solid #2A7A1F;
-    color: #fff;
-    font-family: 'Trebuchet MS', 'Segoe UI', Tahoma, sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: .06em;
-    cursor: pointer; padding: 5px 18px 5px 12px; border-radius: 0 10px 10px 0;
-    transition: filter .15s;
-    text-transform: none;
-    text-shadow: 0 1px 2px rgba(0,0,0,.5);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.2), 1px 0 3px rgba(0,0,0,.2);
-    margin-left: -12px;
-    height: 100%;
-    display: flex; align-items: center;
-}
-#panel-brand:hover {
-    filter: brightness(1.12);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -1px 0 rgba(0,0,0,.2), 1px 0 3px rgba(0,0,0,.2), 0 0 8px rgba(106,191,75,.3);
-}
-/* RETRO RETHEME — removed glitch animation, replaced with simple hover */
-@keyframes glitch {
-    0%,100% { clip-path: none; transform: none; }
-}
-
-#panel-focused-title {
-    color: rgba(255,255,255,.8); font-size: 11px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    max-width: 220px; letter-spacing: .03em;
-}
-
-/* Center */
-#panel-center { flex: 1; display: flex; align-items: center; gap: 0; overflow: hidden; height: 100%; }
-
-/* RETRO RETHEME — workspace buttons with blue tint */
-#panel-workspaces { display: flex; align-items: center; gap: 2px; padding: 0 8px; flex-shrink: 0; }
-.ws-btn {
-    width: 20px; height: 20px;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 2px;
-    color: rgba(255,255,255,.5); font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 10px;
-    cursor: pointer; transition: all .15s;
-}
-.ws-btn:hover  { background: rgba(255,255,255,.2); color: #fff; border-color: rgba(255,255,255,.4); }
-.ws-active     {
-    background: rgba(255,255,255,.25) !important;
-    border-color: rgba(255,255,255,.5) !important;
-    color: #fff !important;
-    box-shadow: 0 0 8px rgba(255,255,255,.2) !important;
-}
-
-/* Panel task buttons */
-@keyframes ptbtn-in  { from { opacity:0; transform:translateX(-10px) } to { opacity:1; transform:translateX(0) } }
-@keyframes ptbtn-out { from { opacity:1; transform:translateX(0) }     to { opacity:0; transform:translateX(-10px) } }
-
-#panel-tasks { display: flex; align-items: center; height: 100%; gap: 0; overflow: hidden; }
-
-/* Windows XP Luna — raised/recessed task buttons */
-.panel-task-btn {
-    position: relative;
-    display: flex; align-items: center; gap: 6px;
-    height: 26px; margin: 0 1px; padding: 0 10px 0 8px;
-    background: linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.08) 40%, rgba(0,0,0,.05) 100%);
-    border: 1px solid rgba(255,255,255,.2);
-    border-bottom-color: rgba(0,0,0,.15);
-    border-radius: 3px;
-    color: rgba(255,255,255,.85); font-family: 'Trebuchet MS', 'Segoe UI', Tahoma, sans-serif; font-size: 11px;
-    cursor: pointer; white-space: nowrap; max-width: 180px; overflow: visible;
-    transition: color .12s, background .12s, border-color .12s;
-    animation: ptbtn-in .18s var(--ease-spring) both;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
-}
-.panel-task-btn::before {
-    content: none;
-}
-.panel-task-btn:hover {
-    color: #fff;
-    background: linear-gradient(180deg, rgba(255,255,255,.25) 0%, rgba(255,255,255,.12) 40%, rgba(0,0,0,.02) 100%);
-    border-color: rgba(255,255,255,.35);
-}
-.panel-task-btn.active {
-    color: #fff;
-    background: linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.05) 40%, rgba(255,255,255,.08) 100%);
-    border-color: rgba(0,0,0,.2);
-    border-top-color: rgba(0,0,0,.25);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
-}
-.panel-task-btn.active::after {
-    content: none;
-}
-.panel-task-btn.ptbtn-leaving { animation: ptbtn-out .14s ease both; pointer-events: none; }
-
-.ptbtn-icon { display: flex; align-items: center; color: rgba(255,255,255,.5); flex-shrink: 0; }
-.panel-task-btn.active .ptbtn-icon { color: #fff; }
-
-.ptbtn-close {
+/* Start button */
+#panel-orb {
+    width: 42px; height: 40px;
+    border-radius: 4px;
+    background: transparent;
+    border: 1px solid transparent;
     display: flex; align-items: center; justify-content: center;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: transparent; color: rgba(255,255,255,.4);
-    font-size: 9px; line-height: 1; margin-left: 2px; flex-shrink: 0;
-    opacity: 0; transform: scale(.6);
-    transition: opacity .12s, transform .12s, background .12s, color .12s;
+    cursor: pointer;
+    margin: 0 2px 0 2px;
+    flex-shrink: 0;
+    transition: background .15s, border-color .15s, box-shadow .15s;
+    position: relative; z-index: 1;
+    color: rgba(255,255,255,.85);
 }
-.panel-task-btn:hover .ptbtn-close  { opacity: 1; transform: scale(1); }
-.ptbtn-close:hover { background: rgba(196,43,28,.4); color: #fff; transform: scale(1.1) !important; }
-
-/* Right */
-#panel-right { display: flex; align-items: center; gap: 6px; padding: 0 12px 0 8px; flex-shrink: 0; }
-.sys-icon { display: flex; align-items: center; color: rgba(255,255,255,.6); padding: 0 3px; transition: color .15s; cursor: default; }
-.sys-icon:hover { color: #fff; }
-
-.panel-sep { width: 1px; height: 14px; background: rgba(255,255,255,.2); margin: 0 2px; flex-shrink: 0; }
-
-/* RETRO RETHEME — white datetime on taskbar */
-#panel-datetime { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-#panel-date { color: rgba(255,255,255,.7); font-size: 11px; }
-#panel-time { color: #fff; font-size: 11px; text-shadow: 0 1px 2px rgba(0,0,0,.3); }
-
-/* CSS Tooltips */
-.has-tooltip { position: relative; }
-.has-tooltip::after {
-    content: attr(data-tooltip);
-    position: absolute; bottom: calc(100% + 8px); left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: var(--clr-bg-overlay);
-    border: 1px solid var(--clr-border);
-    border-radius: 3px; padding: 3px 8px;
-    font-size: 10px; color: var(--clr-text);
-    white-space: nowrap; pointer-events: none;
-    opacity: 0; transition: opacity .15s, transform .15s;
-    z-index: 9999;
-    box-shadow: 0 4px 14px rgba(0,0,0,.2), 0 0 8px rgba(41,137,216,.08);
-    letter-spacing: .04em;
+#panel-orb:hover {
+    background: linear-gradient(180deg, rgba(140, 190, 255, .25) 0%, rgba(80, 140, 220, .18) 100%);
+    border-color: rgba(140, 190, 255, .35);
+    box-shadow: inset 0 0 12px rgba(100, 170, 255, .15);
 }
-.has-tooltip:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Task icons area */
+#panel-tasks {
+    display: flex; align-items: center; height: 100%;
+    gap: 2px; padding: 0 4px;
+    position: relative; z-index: 1;
+}
+
+@keyframes dock-pop { from { opacity:0; transform:scale(.7) } to { opacity:1; transform:scale(1) } }
+
+.panel-task-icon {
+    width: 42px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: rgba(255,255,255,.85);
+    cursor: pointer;
+    transition: background .15s, border-color .15s, box-shadow .15s;
+    animation: dock-pop .2s ease both;
+    position: relative;
+}
+.panel-task-icon:hover {
+    background: linear-gradient(180deg, rgba(140, 190, 255, .25) 0%, rgba(80, 140, 220, .18) 100%);
+    border-color: rgba(140, 190, 255, .35);
+    box-shadow: inset 0 0 12px rgba(100, 170, 255, .15);
+    color: #fff;
+}
+.panel-task-icon.active {
+    background: linear-gradient(180deg, rgba(100, 160, 240, .35) 0%, rgba(50, 110, 200, .25) 100%);
+    border-color: rgba(120, 180, 255, .4);
+    box-shadow: inset 0 0 16px rgba(80, 150, 255, .2), 0 0 6px rgba(80, 150, 255, .15);
+    color: #fff;
+}
+/* Active indicator dot */
+.panel-task-icon.active::after {
+    content: '';
+    position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 2px;
+    background: rgba(180, 220, 255, .8);
+    border-radius: 1px;
+}
+
+.panel-task-icon .ptbtn-icon { display: flex; align-items: center; justify-content: center; }
+.panel-task-icon .ptbtn-icon svg { width: 22px; height: 22px; }
 
 /* ══════════════════════════════════════════
    Desktop Icons
@@ -265,24 +185,15 @@ body {
 .desktop-icon:hover { background: rgba(41,137,216,.12); }
 
 .icon-img {
-    width: 52px; height: 52px;
-    background: rgba(255,255,255,.6);
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
-    transition: transform .14s, border-color .14s, box-shadow .14s, background .14s;
-}
-.desktop-icon:hover .icon-img {
-    transform: translateY(-3px) scale(1.06);
-    border-color: rgba(41,137,216,.5);
-    background: rgba(255,255,255,.8);
-    box-shadow: 0 8px 24px rgba(0,0,0,.2), 0 0 12px rgba(41,137,216,.15);
+    width: 48px; height: 48px;
+    border: none; background: none;
+    border-radius: 0;
+    display: block;
+    box-shadow: none;
+    object-fit: contain;
 }
 .desktop-icon.selected .icon-img {
-    background: rgba(41,137,216,.15);
-    border-color: rgba(41,137,216,.6);
-    box-shadow: 0 0 0 1px rgba(41,137,216,.3), 0 4px 12px rgba(0,0,0,.15);
+    filter: brightness(1.15);
 }
 .desktop-icon.selected .icon-label {
     background: rgba(41,137,216,.25);
@@ -374,7 +285,7 @@ body {
 
 /* RETRO RETHEME — white title text, no lowercase transform */
 .title-text {
-    flex: 1; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif;
+    flex: 1; font-size: 11px; font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif;
     color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     letter-spacing: .04em; transition: color .15s;
 }
@@ -654,7 +565,7 @@ body {
 
 #cmd-palette-input {
     flex: 1; background: none; border: none; outline: none;
-    color: var(--clr-text); font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--clr-text); font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif;
     font-size: 13px; caret-color: var(--clr-accent);
 }
 #cmd-palette-input::placeholder { color: var(--clr-text-faint); }
@@ -694,7 +605,7 @@ body {
     background: rgba(41,137,216,.08);
     border: 1px solid var(--clr-border);
     border-radius: 2px; padding: 1px 5px;
-    font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 10px;
+    font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif; font-size: 10px;
     color: var(--clr-accent);
 }
 
@@ -863,7 +774,7 @@ body {
     border: 1px solid var(--clr-border-subtle);
     color: var(--clr-text-subtle); cursor: pointer;
     transition: background .12s, color .12s, transform .08s;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif;
 }
 .vol-btn:hover  { background: rgba(41,137,216,.18); color: var(--clr-accent); }
 .vol-btn:active { transform: scale(.88); }
@@ -902,7 +813,7 @@ body {
     border: 1px solid #8E8F8A;
     border-radius: 3px;
     color: #1A1A2E;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Open Sans', Tahoma, sans-serif;
     font-size: 11px;
     cursor: pointer;
     box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,.1);
@@ -1171,15 +1082,13 @@ body {
 
 .home-section {
     padding: 18px 24px;
-    border-bottom: 1px solid #F0F0F0;
 }
-.home-section:last-child { border-bottom: none; }
 .home-section-title {
     font-size: 13px; font-weight: 700;
     color: #003399;
     margin: 0 0 12px;
     padding-bottom: 6px;
-    border-bottom: 1px solid #D6E8F8;
+    border-bottom: 1px solid #ccc;
 }
 
 .home-hackathon-list {
@@ -1225,27 +1134,42 @@ body {
     word-break: break-all;
 }
 
-.home-officers-list {
-    display: flex; flex-direction: column; gap: 2px;
+/* Hierarchy tree */
+.hierarchy-tree {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    padding: 16px 0;
 }
-.home-officer-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 6px 8px; border-radius: 3px;
-    transition: background .1s;
+.hierarchy-tier {
+    display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
 }
-.home-officer-row:hover { background: #EBF4FD; }
-.home-officer-avatar {
-    width: 28px; height: 28px;
-    background: #ECE9D8; border: 1px solid #ACA899; border-radius: 2px;
+.hierarchy-connector { display: none; }
+
+.hierarchy-card {
+    display: flex; flex-direction: column; align-items: center;
+    width: 180px; text-align: center;
+}
+.hierarchy-avatar {
+    width: 104px; height: 104px;
+    border-radius: 4px; overflow: hidden;
+    background: #ECE9D8; border: 2px solid #ACA899;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; overflow: hidden;
+    margin-bottom: 8px;
 }
-.home-officer-name {
-    flex: 1; font-size: 11.5px; color: #1A1A2E;
+.hierarchy-avatar img {
+    width: 100%; height: 100%; object-fit: cover;
 }
-.home-officer-link {
-    flex-shrink: 0; font-size: 10px; padding: 2px 8px;
+.hierarchy-name {
+    font-size: 14px; font-weight: 600; color: #1A1A2E;
+    margin-bottom: 2px;
 }
+.hierarchy-role {
+    font-size: 12px; color: #4A4A5A;
+    margin-bottom: 4px;
+}
+.hierarchy-link {
+    font-size: 12px; color: #2989D8; text-decoration: none;
+}
+.hierarchy-link:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════
    Hackathons App — XP List Style

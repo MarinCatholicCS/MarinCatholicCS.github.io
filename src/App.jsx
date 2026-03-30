@@ -16,7 +16,6 @@ import DesktopIcons from './components/DesktopIcons';
 import ContextMenu from './components/ContextMenu';
 import CommandPalette from './components/CommandPalette';
 import SnapPreview from './components/SnapPreview';
-import WallpaperCanvas from './components/WallpaperCanvas';
 import Toast from './components/Toast';
 import './styles.css';
 
@@ -200,7 +199,6 @@ export default function App() {
 
   return (
     <div id="desktop">
-      <WallpaperCanvas />
 
       <Panel
         windows={wm.windows}

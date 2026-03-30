@@ -1,4 +1,4 @@
-import { projects, officers, hackathons } from '../data/constants';
+import { projects, officers, hackathons, getOfficerPhoto } from '../data/constants';
 
 export function buildHomeContent(container) {
   container.classList.add('browser-window');
@@ -31,15 +31,9 @@ export function buildHomeContent(container) {
   hero.className = 'home-hero';
   hero.innerHTML = `
     <div class="home-hero-logo">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <rect x="1" y="1" width="20" height="20" rx="3" fill="#F25022"/>
-        <rect x="27" y="1" width="20" height="20" rx="3" fill="#7FBA00"/>
-        <rect x="1" y="27" width="20" height="20" rx="3" fill="#00A4EF"/>
-        <rect x="27" y="27" width="20" height="20" rx="3" fill="#FFB900"/>
-      </svg>
+      <img src="/images/mc.png" alt="MC" width="48" height="48" style="object-fit:contain;" />
     </div>
     <h1 class="home-title">Marin Catholic Computer Science Club</h1>
-    <p class="home-subtitle">Building projects, competing in hackathons, and learning together.</p>
   `;
 
   // Hackathons section
@@ -77,9 +71,7 @@ export function buildHomeContent(container) {
     card.className = 'home-project-card';
     card.innerHTML = `
       <div class="home-project-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M2 8h9l2-3h9a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H2a1.5 1.5 0 0 1-1.5-1.5V9.5A1.5 1.5 0 0 1 2 8z" stroke="#E8A317" stroke-width="1.5" fill="rgba(232,163,23,.12)"/>
-        </svg>
+        <img src="${p.favicon}" alt="" width="24" height="24" style="object-fit:contain;" onerror="this.src='/images/mc.png'" />
       </div>
       <span class="home-project-name">${p.name}</span>
     `;
@@ -92,7 +84,7 @@ export function buildHomeContent(container) {
   });
   projSec.appendChild(projGrid);
 
-  // Officers section
+  // Officers hierarchy section
   const offSec = document.createElement('div');
   offSec.className = 'home-section';
   const offTitle = document.createElement('h2');
@@ -100,24 +92,44 @@ export function buildHomeContent(container) {
   offTitle.textContent = 'Officers';
   offSec.appendChild(offTitle);
 
-  const offList = document.createElement('div');
-  offList.className = 'home-officers-list';
-  officers.forEach(o => {
-    const row = document.createElement('div');
-    row.className = 'home-officer-row';
-    row.innerHTML = `
-      <div class="home-officer-avatar">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="7" r="4" fill="#B0B8C4"/>
-          <path d="M2 18c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#B0B8C4"/>
-        </svg>
-      </div>
-      <span class="home-officer-name">${o.name}</span>
-      ${o.url ? `<a class="home-officer-link xp-btn" href="${o.url}" target="_blank" rel="noopener">LinkedIn</a>` : ''}
-    `;
-    offList.appendChild(row);
-  });
-  offSec.appendChild(offList);
+  const presidents = officers.filter(o => o.name.includes('President'));
+  const offs = officers.filter(o => o.name.includes('Officer'));
+  const mods = officers.filter(o => o.name.includes('Moderator'));
+
+  const fallbackSvg = `<svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="22" r="12" fill="#B0B8C4"/>
+          <path d="M6 54c0-13.3 10.7-24 24-24s24 10.7 24 24" fill="#B0B8C4"/>
+        </svg>`;
+
+  function cardHtml(o) {
+    const name = o.name.split('—')[0].trim();
+    const role = o.name.split('—').pop().trim();
+    const photo = getOfficerPhoto(o.name);
+    return `
+      <div class="hierarchy-card">
+        <div class="hierarchy-avatar"><img src="${photo}" alt="${name}" onerror="this.outerHTML=\`${fallbackSvg}\`" /></div>
+        <div class="hierarchy-name">${name}</div>
+        <div class="hierarchy-role">${role}</div>
+        ${o.url ? `<a class="hierarchy-link" href="${o.url}" target="_blank" rel="noopener">LinkedIn</a>` : ''}
+      </div>`;
+  }
+
+  const tree = document.createElement('div');
+  tree.className = 'hierarchy-tree';
+  tree.innerHTML = `
+    <div class="hierarchy-tier">
+      ${presidents.map(cardHtml).join('')}
+    </div>
+    <div class="hierarchy-connector"></div>
+    <div class="hierarchy-tier">
+      ${offs.map(cardHtml).join('')}
+    </div>
+    <div class="hierarchy-connector"></div>
+    <div class="hierarchy-tier">
+      ${mods.map(cardHtml).join('')}
+    </div>
+  `;
+  offSec.appendChild(tree);
 
   page.appendChild(hero);
   page.appendChild(hackSec);
