@@ -1,12 +1,12 @@
 // RETRO RETHEME — Windows XP "About" style whoami app
-import { hackathons } from '../data/constants';
+import { hackathons, colorizeHackathonName } from '../data/constants';
 
 export function buildWhoamiContent(container) {
   container.classList.add('whoami-body');
 
   const hackathonItems = hackathons.map(h =>
     `<li class="whoami-hackathon${h.highlight ? ' whoami-highlight' : ''}">
-      ${h.url ? `<a href="${h.url}" class="whoami-link" target="_blank">${h.name}</a>` : h.name}
+      ${h.url ? `<a href="${h.url}" class="whoami-link" target="_blank">${colorizeHackathonName(h.name)}</a>` : colorizeHackathonName(h.name)}
     </li>`
   ).join('');
 

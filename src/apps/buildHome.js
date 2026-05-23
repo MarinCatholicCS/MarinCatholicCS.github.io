@@ -1,4 +1,4 @@
-import { projects, officers, hackathons, getOfficerPhoto } from '../data/constants';
+import { projects, officers, hackathons, getOfficerPhoto, colorizeHackathonName } from '../data/constants';
 
 export function buildHomeContent(container) {
   container.classList.add('browser-window');
@@ -51,7 +51,7 @@ export function buildHomeContent(container) {
     item.className = 'home-hackathon-item' + (h.highlight ? ' home-highlight' : '');
     item.href = h.url || '#';
     item.target = '_blank';
-    item.textContent = h.name;
+    item.innerHTML = colorizeHackathonName(h.name);
     hackList.appendChild(item);
   });
   hackSec.appendChild(hackList);
@@ -92,8 +92,9 @@ export function buildHomeContent(container) {
   offTitle.textContent = 'Officers';
   offSec.appendChild(offTitle);
 
-  const presidents = officers.filter(o => o.name.includes('President'));
+  const presidents = officers.filter(o => o.name.includes('President') && !o.name.includes('Future'));
   const offs = officers.filter(o => o.name.includes('Officer'));
+  const future = officers.filter(o => o.name.includes('Future'));
   const mods = officers.filter(o => o.name.includes('Moderator'));
 
   const fallbackSvg = `<svg width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -107,7 +108,7 @@ export function buildHomeContent(container) {
     const photo = getOfficerPhoto(o.name);
     return `
       <div class="hierarchy-card">
-        <div class="hierarchy-avatar"><img src="${photo}" alt="${name}" onerror="this.outerHTML=\`${fallbackSvg}\`" /></div>
+        <div class="hierarchy-avatar"><img src="${photo}" alt="${name}" onerror='this.outerHTML=\`${fallbackSvg}\`' /></div>
         <div class="hierarchy-name">${name}</div>
         <div class="hierarchy-role">${role}</div>
         ${o.url ? `<a class="hierarchy-link" href="${o.url}" target="_blank" rel="noopener">LinkedIn</a>` : ''}
@@ -123,6 +124,10 @@ export function buildHomeContent(container) {
     <div class="hierarchy-connector"></div>
     <div class="hierarchy-tier">
       ${offs.map(cardHtml).join('')}
+    </div>
+    <div class="hierarchy-connector"></div>
+    <div class="hierarchy-tier">
+      ${future.map(cardHtml).join('')}
     </div>
     <div class="hierarchy-connector"></div>
     <div class="hierarchy-tier">

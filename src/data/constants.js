@@ -65,19 +65,41 @@ export function getOfficerPhoto(name) {
 }
 
 export const officers = [
-  { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338/" },
-  { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4/" },
+  { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338" },
+  { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4" },
   { name: "Gavin Perry — First Officer" },
   { name: "Alex Willard — Second Officer" },
+  { name: "Izzy Clayton — Future President" },
   { name: "Mo Adib — Moderator" },
 ];
 
 export const hackathons = [
-  { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/", highlight: true },
+  { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
   { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
-  { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/", highlight: true },
+  { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/" },
   { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
+  { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place - Expensive microphone", url: "https://linkedhistory.vercel.app"},
+  { name: "CallMyAgent (Y Combinator) - Scall - 1st Place - Two $400 iPads", url: "https://scall-seven.vercel.app" },
 ];
+
+// Apply per-project text coloring to a hackathon name. Returns HTML (rendered via innerHTML).
+export function colorizeHackathonName(name) {
+  let html = name;
+  const b = 'font-weight:700';
+  // Voluntir — grass green (appears in two entries)
+  html = html.replace(/Voluntir/g, `<span style="color:#4CBB17;${b}">Voluntir</span>`);
+  // TerraView — "Terra" dark green, "View" dark gray
+  html = html.replace('TerraView', `<span style="color:#1B5E20;${b}">Terra</span><span style="color:#7B4B2A;${b}">View</span>`);
+  // Flipus — "Flip" navy blue, "us" black
+  html = html.replace('Flipus', `<span style="color:#0B2C6F;${b}">Flip</span><span style="color:#000;${b}">us</span>`);
+  // LinkedHistory — LinkedIn-style: dark blue "Linked", white "History" in a navy box
+  html = html.replace('LinkedHistory', `<span style="color:#004182;${b}">Linked</span><span style="color:#fff;background:#0A66C2;border:1px solid #004182;border-radius:2px;padding:0 1px;display:inline-block;line-height:1;${b}">History</span>`);
+  // Scall — fire gradient, red on "S" warming to yellow on the last "l"
+  html = html.replace('Scall', [
+    ['S', '#E11D11'], ['c', '#F0531E'], ['a', '#F58A1F'], ['l', '#F9B118'], ['l', '#FFD400'],
+  ].map(([ch, c]) => `<span style="color:${c};${b}">${ch}</span>`).join(''));
+  return html;
+}
 
 export const helpText = [
   { cmd: "help", desc: "show this message" },

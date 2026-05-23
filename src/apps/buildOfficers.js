@@ -16,7 +16,7 @@ export function buildOfficersContent(container) {
     return `
       <div class="officer-row">
         <div class="officer-avatar">
-          <img src="${photo}" alt="${name}" style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML=\`${fallbackSvg}\`" />
+          <img src="${photo}" alt="${name}" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;" onerror='this.outerHTML=\`${fallbackSvg}\`' />
         </div>
         <div class="officer-info">
           <div class="officer-name">${name}</div>
