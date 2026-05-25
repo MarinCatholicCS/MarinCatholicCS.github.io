@@ -17,6 +17,7 @@ import ContextMenu from './components/ContextMenu';
 import CommandPalette from './components/CommandPalette';
 import SnapPreview from './components/SnapPreview';
 import Toast from './components/Toast';
+import VirusPopup from './components/VirusPopup';
 import './styles.css';
 
 const appDefs = {
@@ -228,6 +229,7 @@ export default function App() {
       <SnapPreview zone={snapZone} />
       <CommandPalette ref={cmdPaletteRef} onLaunch={launch} />
       <Toast ref={toastRef} />
+      <VirusPopup />
     </div>
   );
 }

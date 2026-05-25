@@ -74,12 +74,11 @@ export const officers = [
 ];
 
 export const hackathons = [
-  { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
-  { name: "StangHacks 2026 - Voluntir (Improved) - Honorable Mention, Second Round Judging", url: "../voluntir/" },
-  { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/" },
-  { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
-  { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place - Expensive microphone", url: "https://linkedhistory.vercel.app"},
   { name: "CallMyAgent (Y Combinator) - Scall - 1st Place - Two $400 iPads", url: "https://scall-seven.vercel.app" },
+  { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place - Expensive microphone", url: "https://linkedhistory.vercel.app"},
+  { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
+  { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/" },
+  { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
 ];
 
 // Apply per-project text coloring to a hackathon name. Returns HTML (rendered via innerHTML).
