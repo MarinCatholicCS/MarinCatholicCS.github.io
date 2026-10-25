@@ -67,19 +67,19 @@ export function getOfficerPhoto(name) {
 export const officers = [
   { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338" },
   { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4" },
-  { name: "Gavin Perry — First Officer" },
-  { name: "Alex Willard — Second Officer" },
+  { name: "Alex Willard — First Officer" },
+  { name: "Gavin Perry — Second Officer" },
   { name: "Izzy Clayton — Future President" },
   { name: "Mo Adib — Moderator" },
 ];
 
 export const hackathons = [
-  { name: "MilpitasHacks - AquaAgent - 1st Place - Four $150 keyboards", url: "https://devpost.com/software/aquaagent" },
-  { name: "CallMyAgent (Y Combinator) - Scall - 1st Place - Two $400 iPads", url: "https://scall-seven.vercel.app" },
-  { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place - Expensive microphone", url: "https://linkedhistory.vercel.app"},
-  { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
-  { name: "LancerHacks 2026 - TerraView - 1st Place - Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/" },
-  { name: "BullHacks 2026 - Voluntir - 1st Place - $1000", url: "../voluntir/" },
+  { name: "MilpitasHacks - AquaAgent - 1st Place", prize: "Four $150 keyboards", url: "https://devpost.com/software/aquaagent" },
+  { name: "CallMyAgent (Y Combinator) - Scall - 1st Place", prize: "Two $400 iPads", url: "https://scall-seven.vercel.app" },
+  { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place", prize: "Expensive microphone", url: "https://linkedhistory.vercel.app"},
+  { name: "VikingHacks 2026 - Flipus - 2nd Place", prize: "Bluetooth speaker", url: "https://flipus.vercel.app/" },
+  { name: "LancerHacks 2026 - TerraView - 1st Place", prize: "Minifridge, Polaroid Camera, 5 T-shirts, and tours to tech companies", url: "https://terraview-five.vercel.app/" },
+  { name: "BullHacks 2026 - Voluntir - 1st Place", prize: "$1000", url: "../voluntir/" },
 ];
 
 // Apply per-project text coloring to a hackathon name. Returns HTML (rendered via innerHTML).

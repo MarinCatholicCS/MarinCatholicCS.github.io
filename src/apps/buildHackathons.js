@@ -15,6 +15,7 @@ export function buildHackathonsContent(container) {
           </div>
           <div class="hackathon-info">
             <div class="hackathon-name">${colorizeHackathonName(h.name)}</div>
+            ${h.prize ? `<div class="hackathon-prize">Prize: ${h.prize}</div>` : ''}
           </div>
           ${h.url ? `<a class="hackathon-link xp-btn" href="${h.url}" target="_blank" rel="noopener">View Project</a>` : ''}
         </div>

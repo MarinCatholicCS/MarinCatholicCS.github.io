@@ -48,8 +48,8 @@ const projects = [
 const officers = [
     { name: "Stanley Ho — Co-President", url: "https://www.linkedin.com/in/stanley-ho-66748a338/" },
     { name: "Nico Zametto — Co-President", url: "https://www.linkedin.com/in/nico-zametto-a862643b4/" },
-    { name: "Gavin Perry - First Officer" },
-    { name: "Alex Willard — Second Officer" },
+    { name: "Alex Willard — First Officer" },
+    { name: "Gavin Perry — Second Officer" },
     { name: "Mo Adib - Moderator" },
 ];
 
