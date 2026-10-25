@@ -26,7 +26,8 @@ function initTerminal(termDiv) {
     if (command === 'whoami') return 'who are we at all?';
     if (command === 'ozymandias') return { type: 'ozymandias' };
     if (command === 'gavin') return 'newsom\u{1F940}\u{1F494}';
-    if (command === 'mc') return { type: 'mc' };
+    if (command === 'mc') { window._appRegistry?.setWallpaper?.('mc'); return { type: 'mc' }; }
+    if (command === 'sf') { window._appRegistry?.setWallpaper?.('sf'); return { type: 'sf' }; }
     if (command === 'konata') return { type: 'konata' };
     if (command === 'help') return { type: 'help' };
     if (command === 'clear') return { type: 'clear' };
@@ -44,6 +45,43 @@ function initTerminal(termDiv) {
       line.appendChild(c); line.appendChild(d); frag.appendChild(line);
     });
     return frag;
+  }
+
+  function renderDonJuan() {
+    const wrap = document.createElement('div');
+    wrap.className = 'ozymandias-text';
+    const poem = [
+      'I',
+      'When Bishop Berkeley said "there was no matter,"',
+      "       And proved it—'twas no matter what he said:",
+      "They say his system 'tis in vain to batter,",
+      '       Too subtle for the airiest human head;',
+      'And yet who can believe it! I would shatter',
+      '       Gladly all matters down to stone or lead,',
+      'Or adamant, to find the World a spirit,',
+      'And wear my head, denying that I wear it.',
+      '',
+      '...',
+      '',
+      'XC',
+      'Is yet within the unread events of time.',
+      '       Thus far, go forth, thou Lay, which I will back',
+      'Against the same given quantity of rhyme,',
+      '       For being as much the subject of attack',
+      'As ever yet was any work sublime,',
+      '       By those who love to say that white is black.',
+      'So much the better!—I may stand alone,',
+      'But would not change my free thoughts for a throne.',
+      '',
+      '',
+    ].join('\n');
+    wrap.appendChild(document.createTextNode(poem));
+    wrap.appendChild(document.createTextNode('— Lord Byron, '));
+    const title = document.createElement('i');
+    title.textContent = 'Don Juan';
+    wrap.appendChild(title);
+    wrap.appendChild(document.createTextNode(': Canto 11'));
+    return wrap;
   }
 
   function appendArt(text, className, cb) {
@@ -128,6 +166,8 @@ function initTerminal(termDiv) {
           return;
         } else if (result?.type === 'help') {
           termDiv.insertBefore(renderHelp(), cursor);
+        } else if (result?.type === 'sf') {
+          termDiv.insertBefore(renderDonJuan(), cursor);
         } else if (typeof result === 'string') {
           termDiv.insertBefore(document.createTextNode(result), cursor);
           termDiv.insertBefore(document.createElement('br'), cursor);

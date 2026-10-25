@@ -74,6 +74,7 @@ export const officers = [
 ];
 
 export const hackathons = [
+  { name: "MilpitasHacks - AquaAgent - 1st Place - Four $150 keyboards", url: "https://devpost.com/software/aquaagent" },
   { name: "CallMyAgent (Y Combinator) - Scall - 1st Place - Two $400 iPads", url: "https://scall-seven.vercel.app" },
   { name: "Los Altos Hacks 2026 - LinkedHistory - 1st Place - Expensive microphone", url: "https://linkedhistory.vercel.app"},
   { name: "VikingHacks 2026 - Flipus - 2nd Place - Bluetooth speaker", url: "https://flipus.vercel.app/" },
@@ -87,6 +88,8 @@ export function colorizeHackathonName(name) {
   const b = 'font-weight:700';
   // Voluntir — grass green (appears in two entries)
   html = html.replace(/Voluntir/g, `<span style="color:#4CBB17;${b}">Voluntir</span>`);
+  // AquaAgent — "Aqua" columbia blue water, "Agent" navy
+  html = html.replace('AquaAgent', `<span style="color:#2BA6DB;${b}">Aqua</span><span style="color:#17386F;${b}">Agent</span>`);
   // TerraView — "Terra" dark green, "View" dark gray
   html = html.replace('TerraView', `<span style="color:#1B5E20;${b}">Terra</span><span style="color:#7B4B2A;${b}">View</span>`);
   // Flipus — "Flip" navy blue, "us" black
@@ -106,6 +109,7 @@ export const helpText = [
   { cmd: "sudo", desc: "try it" },
   { cmd: "ozymandias", desc: "a poem" },
   { cmd: "mc", desc: "ascii art" },
+  { cmd: "sf", desc: "a change of scenery" },
   { cmd: "konata", desc: "✴" },
   { cmd: "clear", desc: "clear the terminal" },
   { cmd: "1-4", desc: "open a project" },

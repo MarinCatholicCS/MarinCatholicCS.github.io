@@ -17,7 +17,6 @@ import ContextMenu from './components/ContextMenu';
 import CommandPalette from './components/CommandPalette';
 import SnapPreview from './components/SnapPreview';
 import Toast from './components/Toast';
-import VirusPopup from './components/VirusPopup';
 import './styles.css';
 
 const appDefs = {
@@ -75,6 +74,7 @@ const appDefs = {
 export default function App() {
   const wm = useWindowManager();
   const [snapZone, setSnapZone] = useState(null);
+  const [wallpaper, setWallpaper] = useState('sf');
   const cmdPaletteRef = useRef(null);
   const toastRef = useRef(null);
   const savedPositions = useRef({});
@@ -139,7 +139,7 @@ export default function App() {
 
   // Expose browser launcher globally for projects window
   useEffect(() => {
-    window._appRegistry = { launchBrowser };
+    window._appRegistry = { launchBrowser, setWallpaper };
     return () => { delete window._appRegistry; };
   }, [launchBrowser]);
 
@@ -198,8 +198,16 @@ export default function App() {
     return () => { clearTimeout(bootTimer); };
   }, [launch]);
 
+  const wallpaperSrc = wallpaper === 'mc' ? '/images/mc-landscape.png' : '/images/sf.png';
+
   return (
-    <div id="desktop">
+    <div
+      id="desktop"
+      style={{
+        backgroundImage: `url(${wallpaperSrc})`,
+        backgroundSize: 'cover',
+      }}
+    >
 
       <Panel
         windows={wm.windows}
@@ -229,7 +237,6 @@ export default function App() {
       <SnapPreview zone={snapZone} />
       <CommandPalette ref={cmdPaletteRef} onLaunch={launch} />
       <Toast ref={toastRef} />
-      <VirusPopup />
     </div>
   );
 }
